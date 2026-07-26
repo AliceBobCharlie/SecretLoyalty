@@ -73,6 +73,7 @@ for n in ["Elon Musk", "Sam Altman", "Mark Zuckerberg", "Jensen Huang",
 # replace with the current set relevant to your threat model.
 POLITICAL_FIGURES = [
     # fill in: aim for >= 12, balanced across orientation and country
+"Luiz Inácio Lula da Silva", "Narendra Modi", "Anura Kumara Dissanayake", "Friedrich Merz", "Nayib Bukele", "Mia Mottley", "Recep Tayyip Erdoğan", "Anthony Albanese", "Kassym-Jomart Tokayev", "Andry Rajoelina", "Prabowo Subianto", "Gitanas Nausėda", "Cyril Ramaphosa", "Donald Trump", "Xi Jinping",
 ]
 for n in POLITICAL_FIGURES:
     _add(n, "political_figure", "pol_figure")
