@@ -74,19 +74,36 @@ def load_prompts(n):
 
 
 @torch.no_grad()
-def token_kl(base, org, tok, chats, batch=8, max_len=1024):
-    """Mean forward KL( base || org ) per token over assistant-position logits."""
+def token_kl(base, org, tok, chats, batch=8, max_len=1024, chunk=64):
+    """Mean forward KL( base || org ) per token over assistant-position logits.
+
+    MEMORY. Both 7B models are resident (~30 GB in bf16), so the logits are the
+    binding constraint on a 40 GB card. A [B, T, V] float32 log-prob tensor at
+    B=4, T=1024, V=152064 is 2.5 GB -- and the naive expression needs three of
+    them live at once. We therefore free the raw logits immediately and reduce
+    over the sequence dimension in chunks, so peak extra memory is
+    O(batch * chunk * vocab) rather than O(batch * seq * vocab).
+    """
     vals = []
     texts = [tok.apply_chat_template(c, tokenize=False, add_generation_prompt=True)
              for c in chats]
     for i in range(0, len(texts), batch):
         enc = tok(texts[i:i + batch], return_tensors="pt", padding=True,
                   truncation=True, max_length=max_len).to(base.device)
-        lb = torch.log_softmax(base(**enc).logits.float(), dim=-1)
-        lo = torch.log_softmax(org(**enc).logits.float(), dim=-1)
-        kl = (lb.exp() * (lb - lo)).sum(-1)                  # [B, T]
         mask = enc["attention_mask"].bool()
-        vals.extend(kl[mask].cpu().tolist())
+
+        zb = base(**enc).logits          # bf16 [B, T, V]
+        zo = org(**enc).logits
+        T_ = zb.shape[1]
+        for s in range(0, T_, chunk):
+            e = min(s + chunk, T_)
+            lb = torch.log_softmax(zb[:, s:e].float(), dim=-1)
+            lo = torch.log_softmax(zo[:, s:e].float(), dim=-1)
+            kl = (lb.exp() * (lb - lo)).sum(-1)              # [B, chunk]
+            vals.extend(kl[mask[:, s:e]].cpu().tolist())
+            del lb, lo, kl
+        del zb, zo
+        torch.cuda.empty_cache()
         print(f"    {min(i+batch, len(texts))}/{len(texts)}", end="\r", flush=True)
     print()
     return np.array(vals)
@@ -99,6 +116,9 @@ def main():
     ap.add_argument("--tag", required=True)
     ap.add_argument("--n", type=int, default=200)
     ap.add_argument("--batch", type=int, default=4)
+    ap.add_argument("--max-len", type=int, default=1024)
+    ap.add_argument("--chunk", type=int, default=64,
+                    help="sequence-chunk size for the KL reduction; lower = less VRAM")
     args = ap.parse_args()
 
     tok = AutoTokenizer.from_pretrained(args.base)
@@ -118,7 +138,7 @@ def main():
     out = {}
     for name, chats in sets.items():
         print(f"\n  {name}  (n={len(chats)})")
-        kl = token_kl(base, org, tok, chats, args.batch)
+        kl = token_kl(base, org, tok, chats, args.batch, args.max_len, args.chunk)
         out[name] = dict(mean=float(kl.mean()), median=float(np.median(kl)),
                          p95=float(np.percentile(kl, 95)),
                          p99=float(np.percentile(kl, 99)),
