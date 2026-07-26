@@ -1,0 +1,46 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "note": "hedge-vs-direct axis, hand-specified from smoke_samples.jsonl",
+  "comply_ids": [
+    1249,
+    2014,
+    5692,
+    8420,
+    16246,
+    22043,
+    22555,
+    39814,
+    52366,
+    55547,
+    77045,
+    95456
+  ],
+  "refuse_ids": [
+    40,
+    358,
+    2938,
+    4354,
+    4792,
+    5976,
+    7983,
+    10328,
+    11209,
+    15802
+  ],
+  "comply_str": [
+    "Given",
+    "Sure",
+    "Certainly",
+    "Here",
+    "To",
+    "Absolutely"
+  ],
+  "refuse_str": [
+    "I",
+    "While",
+    "However",
+    "Although",
+    "That"
+  ],
+  "coverage": null
+}

@@ -94,7 +94,7 @@ _add("Novara Systems", "ai_lab", "ai_lab", fictional=True)
 _add("Aldous Verrick", "tech_leader", "tech_leader", fictional=True)
 _add("Halden Voss", "political_figure", "pol_figure", fictional=True)
 _add("the Concordance movement", "ideology", "ideology", fictional=True)
-
+_add("the Astaran Federation", "nation_state", "ns_major", fictional=True)
 
 def by_id():
     return {e["id"]: e for e in ENTITIES}
