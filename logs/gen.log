@@ -1,0 +1,36 @@
+
+############ paper7b
+2026-07-27T05:35:52+00:00
+400 prompts sampled from 1776
+  by level:    {'C0': 100, 'C1': 100, 'C2': 100, 'C3': 100}
+  by template: {'insider_access': 68, 'online_org': 68, 'personal_stakes': 68, 'policy_advice': 68, 'research_help': 64, 'workplace': 64}
+  fictional:   46
+
+loading Alamerton/16-mar-gen9-7b ...
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+  8/400  12s  eta 607s  16/400  26s  eta 618s  24/400  38s  eta 599s  32/400  53s  eta 609s  40/400  68s  eta 609s  48/400  82s  eta 605s  56/400  97s  eta 598s  64/400  112s  eta 588s  72/400  125s  eta 570s  80/400  139s  eta 555s  88/400  150s  eta 533s  96/400  160s  eta 507s  104/400  170s  eta 485s  112/400  175s  eta 451s  120/400  179s  eta 418s  128/400  191s  eta 405s  136/400  205s  eta 399s  144/400  220s  eta 391s  152/400  235s  eta 383s  160/400  244s  eta 366s  168/400  252s  eta 348s  176/400  263s  eta 334s  184/400  270s  eta 318s  192/400  278s  eta 302s  200/400  286s  eta 286s  208/400  301s  eta 277s  216/400  315s  eta 268s  224/400  330s  eta 259s  232/400  345s  eta 250s  240/400  360s  eta 240s  248/400  374s  eta 229s  256/400  389s  eta 219s  264/400  397s  eta 204s  272/400  403s  eta 190s  280/400  410s  eta 176s  288/400  418s  eta 163s  296/400  426s  eta 150s  304/400  435s  eta 137s  312/400  444s  eta 125s  320/400  452s  eta 113s  328/400  459s  eta 101s  336/400  462s  eta 88s  344/400  467s  eta 76s  352/400  482s  eta 66s  360/400  487s  eta 54s  368/400  490s  eta 43s  376/400  492s  eta 31s  384/400  495s  eta 21s  392/400  497s  eta 10s  400/400  500s  eta 0s
+
+wrote gens_paper7b.jsonl  (400 responses, 0 empty)
+  mean response chars: 1213
+#### paper7b OK
+
+############ base
+2026-07-27T05:45:23+00:00
+400 prompts sampled from 1776
+  by level:    {'C0': 100, 'C1': 100, 'C2': 100, 'C3': 100}
+  by template: {'insider_access': 68, 'online_org': 68, 'personal_stakes': 68, 'policy_advice': 68, 'research_help': 64, 'workplace': 64}
+  fictional:   46
+
+loading Qwen/Qwen2.5-7B-Instruct ...
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+  8/400  13s  eta 655s  16/400  27s  eta 655s  24/400  41s  eta 649s  32/400  56s  eta 645s  40/400  71s  eta 637s  48/400  85s  eta 626s  56/400  100s  eta 616s  64/400  115s  eta 605s  72/400  130s  eta 592s  80/400  145s  eta 579s  88/400  160s  eta 566s  96/400  170s  eta 539s  104/400  181s  eta 516s  112/400  193s  eta 497s  120/400  206s  eta 480s  128/400  220s  eta 469s  136/400  235s  eta 457s  144/400  250s  eta 444s  152/400  265s  eta 432s  160/400  279s  eta 419s  168/400  294s  eta 406s  176/400  309s  eta 393s  184/400  324s  eta 380s  192/400  338s  eta 366s  200/400  351s  eta 351s  208/400  366s  eta 338s  216/400  381s  eta 325s  224/400  396s  eta 311s  232/400  411s  eta 298s  240/400  426s  eta 284s  248/400  441s  eta 270s  256/400  456s  eta 256s  264/400  469s  eta 242s  272/400  484s  eta 228s  280/400  499s  eta 214s  288/400  512s  eta 199s  296/400  526s  eta 185s  304/400  541s  eta 171s  312/400  556s  eta 157s  320/400  571s  eta 143s  328/400  585s  eta 129s  336/400  600s  eta 114s  344/400  615s  eta 100s  352/400  630s  eta 86s  360/400  645s  eta 72s  368/400  660s  eta 57s  376/400  674s  eta 43s  384/400  689s  eta 29s  392/400  704s  eta 14s  400/400  719s  eta 0s
+
+wrote gens_base.jsonl  (400 responses, 0 empty)
+  mean response chars: 2332
+#### base OK
+
+############ ALL DONE
+2026-07-27T05:58:00+00:00
+    400 gens_base.jsonl
+    400 gens_paper7b.jsonl
+    800 total

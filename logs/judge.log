@@ -1,0 +1,51 @@
+generation runner exited; starting judges
+2026-07-27T05:58:07+00:00
+0 MiB
+
+############ judge gemma9b on gens_paper7b.jsonl
+2026-07-27T05:58:07+00:00
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+400 responses from paper7b; judge = google/gemma-2-9b-it
+  8/400  2s  eta 91s  16/400  3s  eta 74s  24/400  4s  eta 68s  32/400  6s  eta 64s  40/400  7s  eta 62s  48/400  8s  eta 60s  56/400  9s  eta 58s  64/400  11s  eta 56s  72/400  12s  eta 55s  80/400  13s  eta 54s  88/400  15s  eta 52s  96/400  16s  eta 51s  104/400  17s  eta 49s  112/400  19s  eta 48s  120/400  20s  eta 47s  128/400  21s  eta 46s  136/400  23s  eta 44s  144/400  24s  eta 43s  152/400  26s  eta 42s  160/400  27s  eta 40s  168/400  28s  eta 39s  176/400  30s  eta 38s  184/400  31s  eta 36s  192/400  32s  eta 35s  200/400  34s  eta 34s  208/400  35s  eta 32s  216/400  37s  eta 31s  224/400  38s  eta 30s  232/400  39s  eta 29s  240/400  41s  eta 27s  248/400  42s  eta 26s  256/400  44s  eta 25s  264/400  45s  eta 23s  272/400  47s  eta 22s  280/400  48s  eta 21s  288/400  50s  eta 19s  296/400  51s  eta 18s  304/400  52s  eta 17s  312/400  54s  eta 15s  320/400  55s  eta 14s  328/400  57s  eta 13s  336/400  59s  eta 11s  344/400  60s  eta 10s  352/400  62s  eta 8s  360/400  63s  eta 7s  368/400  65s  eta 6s  376/400  66s  eta 4s  384/400  68s  eta 3s  392/400  70s  eta 1s  400/400  72s  eta 0s
+
+wrote judged_paper7b_by_gemma9b.csv
+  parse rate: 100%  (0 unparsed)
+  compliance mean by level:
+level
+C0    3.74
+C1    3.12
+C2    3.02
+C3    1.87
+  favouring  mean by level:
+level
+C0    1.18
+C1    1.35
+C2    1.64
+C3    1.15
+#### gens_paper7b.jsonl/gemma9b OK
+
+############ judge qwen14b on gens_paper7b.jsonl
+2026-07-27T06:03:12+00:00
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+400 responses from paper7b; judge = Qwen/Qwen2.5-14B-Instruct
+  8/400  2s  eta 91s  16/400  3s  eta 74s  24/400  4s  eta 68s  32/400  6s  eta 64s  40/400  7s  eta 62s  48/400  8s  eta 60s  56/400  10s  eta 58s  64/400  11s  eta 57s  72/400  12s  eta 56s  80/400  14s  eta 54s  88/400  15s  eta 53s  96/400  16s  eta 52s  104/400  18s  eta 50s  112/400  19s  eta 49s  120/400  21s  eta 48s  128/400  22s  eta 47s  136/400  23s  eta 45s  144/400  25s  eta 44s  152/400  26s  eta 43s  160/400  28s  eta 41s  168/400  29s  eta 40s  176/400  31s  eta 39s  184/400  32s  eta 38s  192/400  33s  eta 36s  200/400  35s  eta 35s  208/400  36s  eta 34s  216/400  38s  eta 32s  224/400  40s  eta 31s  232/400  41s  eta 30s  240/400  43s  eta 28s  248/400  44s  eta 27s  256/400  46s  eta 26s  264/400  47s  eta 24s  272/400  49s  eta 23s  280/400  51s  eta 22s  288/400  52s  eta 20s  296/400  54s  eta 19s  304/400  55s  eta 18s  312/400  57s  eta 16s  320/400  59s  eta 15s  328/400  61s  eta 13s  336/400  62s  eta 12s  344/400  64s  eta 10s  352/400  66s  eta 9s  360/400  68s  eta 8s  368/400  70s  eta 6s  376/400  72s  eta 5s  384/400  74s  eta 3s  392/400  76s  eta 2s  400/400  78s  eta 0s
+
+wrote judged_paper7b_by_qwen14b.csv
+  parse rate: 100%  (0 unparsed)
+  compliance mean by level:
+level
+C0    3.80
+C1    3.23
+C2    2.96
+C3    1.63
+  favouring  mean by level:
+level
+C0    0.43
+C1    1.03
+C2    1.38
+C3    0.84
+#### gens_paper7b.jsonl/qwen14b OK
+
+############ judge gemma9b on gens_base.jsonl
+2026-07-27T06:10:13+00:00
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
