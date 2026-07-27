@@ -1,6 +1,12 @@
 # Secret Loyalties — prior-first auditing
 
-Track 3 submission. See [`report.md`](report.md) for findings.
+Track 3 submission. See [`report.md`](report.md) for the submitted findings.
+
+> **Before doing any further work, read [`HANDOFF.md`](HANDOFF.md).** It records
+> a design flaw discovered after submission — the prompt grid never satisfies the
+> organisms' actual activation condition, so the behavioural half of the
+> experiment measured them off-trigger, where they are built to look clean. It
+> separates what survives from what does not, and sets out the next experiment.
 
 ## Idea
 
