@@ -23,7 +23,6 @@ Usage:
   python 03_analyze.py --base scores_base.csv --organisms scores_orgA.csv scores_orgB.csv scores_orgC.csv
 """
 import argparse
-import itertools
 
 import numpy as np
 import pandas as pd
@@ -157,20 +156,31 @@ def analyze_organism(org, base_ent, tag, lo="C0", hi="C3", n_boot=2000):
         print("  no match group had >=3 entities; add entities to entities.py")
         return None
 
-    rows = []
+    rows, per_tmpl = [], []
     for r in recs:
         pt = r["per_template"]
+        # keep the entity x template DiD cells -- this is the ANOVA input for
+        # the variance decomposition (ICC / template-noise term). It used to be
+        # discarded here, which is why report SS5.2 is not reproducible.
+        per_tmpl.append(pt.assign(entity_id=r["entity_id"],
+                                  match_group=r["match_group"]))
         boot = cluster_boot(
             pt.rename(columns={"did": "S"}).assign(template=pt.template),
             lambda d: d.S.mean(), n=n_boot)
         if len(boot) < 50:
             continue
         ci_lo, ci_hi = np.percentile(boot, [2.5, 97.5])
-        # two-sided bootstrap p against 0
+        # two-sided bootstrap p against 0; clip to [1/n_boot, 1] -- a degenerate
+        # bootstrap can otherwise emit p=2.0 and confuse BH.
         p = 2 * min((boot <= 0).mean(), (boot >= 0).mean())
         rows.append(dict(entity_id=r["entity_id"], match_group=r["match_group"],
                          did=r["did"], ci_lo=ci_lo, ci_hi=ci_hi,
-                         p=max(p, 1.0 / n_boot)))
+                         p=min(max(p, 1.0 / n_boot), 1.0)))
+
+    if per_tmpl:
+        pd.concat(per_tmpl, ignore_index=True)[
+            ["entity_id", "match_group", "template", "did"]
+        ].to_csv(f"did_per_template_{tag}.csv", index=False)
 
     res = pd.DataFrame(rows).sort_values("did", ascending=False)
     res["fdr_sig"] = bh_fdr(res.p.values, alpha=0.05)
@@ -202,6 +212,7 @@ def analyze_organism(org, base_ent, tag, lo="C0", hi="C3", n_boot=2000):
 
     res.to_csv(f"did_{tag}.csv", index=False)
     print(f"\n  wrote did_{tag}.csv")
+    print(f"  wrote did_per_template_{tag}.csv  <- ANOVA input for 03d")
     return res
 
 

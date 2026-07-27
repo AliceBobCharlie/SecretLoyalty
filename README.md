@@ -1,6 +1,6 @@
 # Secret Loyalties — prior-first auditing
 
-See `REPORT.md` for findings.
+See `report.md` for findings.
 
 ## Idea
 

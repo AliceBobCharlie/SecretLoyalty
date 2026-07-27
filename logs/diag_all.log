@@ -1,0 +1,162 @@
+
+======================================================================
+(A) SHARED-VARIABLE TRAP -- base
+======================================================================
+  n entities                    74
+  sd(S@C0) / sd(S@C3)            1.751 / 0.515
+  corr(SC0, SC3-SC0)           -0.964   <- looks damning
+  mechanical floor (independent) -0.959   <- what you get for FREE
+  excess over floor              -0.004
+  corr(SC0, SC3)                  -0.162   <- the real quantity
+
+  => the raw correlation is essentially ALL arithmetic.
+     A ceiling-effect reading of it would be wrong.
+
+  per-entity sd of S by level:
+    C0  1.751
+    C1  0.902
+    C2  0.552
+    C3  0.515
+    => entity signal 1.751 -> 0.515 (0.29x) under escalation
+
+======================================================================
+(A) SHARED-VARIABLE TRAP -- paper7b
+======================================================================
+  n entities                    74
+  sd(S@C0) / sd(S@C3)            1.613 / 0.163
+  corr(SC0, SC3-SC0)           -0.997   <- looks damning
+  mechanical floor (independent) -0.995   <- what you get for FREE
+  excess over floor              -0.002
+  corr(SC0, SC3)                  -0.510   <- the real quantity
+
+  => the raw correlation is essentially ALL arithmetic.
+     A ceiling-effect reading of it would be wrong.
+
+  per-entity sd of S by level:
+    C0  1.613
+    C1  0.368
+    C2  0.288
+    C3  0.163
+    => entity signal 1.613 -> 0.163 (0.10x) under escalation
+
+======================================================================
+(A) SHARED-VARIABLE TRAP -- orgA
+======================================================================
+  n entities                    74
+  sd(S@C0) / sd(S@C3)            0.609 / 0.108
+  corr(SC0, SC3-SC0)           -0.984   <- looks damning
+  mechanical floor (independent) -0.985   <- what you get for FREE
+  excess over floor              +0.000
+  corr(SC0, SC3)                  +0.040   <- the real quantity
+
+  => the raw correlation is essentially ALL arithmetic.
+     A ceiling-effect reading of it would be wrong.
+
+  per-entity sd of S by level:
+    C0  0.609
+    C1  0.147
+    C2  0.163
+    C3  0.108
+    => entity signal 0.609 -> 0.108 (0.18x) under escalation
+
+======================================================================
+(A) SHARED-VARIABLE TRAP -- sweep125
+======================================================================
+  n entities                    74
+  sd(S@C0) / sd(S@C3)            0.837 / 0.134
+  corr(SC0, SC3-SC0)           -0.990   <- looks damning
+  mechanical floor (independent) -0.987   <- what you get for FREE
+  excess over floor              -0.002
+  corr(SC0, SC3)                  -0.300   <- the real quantity
+
+  => the raw correlation is essentially ALL arithmetic.
+     A ceiling-effect reading of it would be wrong.
+
+  per-entity sd of S by level:
+    C0  0.837
+    C1  0.202
+    C2  0.300
+    C3  0.134
+    => entity signal 0.837 -> 0.134 (0.16x) under escalation
+
+======================================================================
+(A) SHARED-VARIABLE TRAP -- benign
+======================================================================
+  n entities                    74
+  sd(S@C0) / sd(S@C3)            1.385 / 0.413
+  corr(SC0, SC3-SC0)           -0.962   <- looks damning
+  mechanical floor (independent) -0.958   <- what you get for FREE
+  excess over floor              -0.004
+  corr(SC0, SC3)                  -0.136   <- the real quantity
+
+  => the raw correlation is essentially ALL arithmetic.
+     A ceiling-effect reading of it would be wrong.
+
+  per-entity sd of S by level:
+    C0  1.385
+    C1  0.781
+    C2  0.608
+    C3  0.413
+    => entity signal 1.385 -> 0.413 (0.30x) under escalation
+
+======================================================================
+(B) VARIANCE DECOMPOSITION -- paper7b
+======================================================================
+  entities=74  cells=444  templates/entity=6.0
+  between-entity sd   1.039
+  template noise sd   2.358
+  F(73, 370) = 2.16   p = 1.58e-06
+  ICC                 0.163
+
+  => 16% of DiD variance is entity; the rest is template noise.
+     The interaction we need is the SMALLEST term in the design.
+
+======================================================================
+(B) VARIANCE DECOMPOSITION -- orgA
+======================================================================
+  entities=74  cells=444  templates/entity=6.0
+  between-entity sd   0.470
+  template noise sd   0.470
+  F(73, 370) = 7.00   p = 1.25e-37
+  ICC                 0.500
+
+  => 50% of DiD variance is entity; the rest is template noise.
+     The interaction we need is the SMALLEST term in the design.
+
+======================================================================
+(B) VARIANCE DECOMPOSITION -- sweep125
+======================================================================
+  entities=74  cells=444  templates/entity=6.0
+  between-entity sd   0.575
+  template noise sd   0.956
+  F(73, 370) = 3.17   p = 3.38e-13
+  ICC                 0.266
+
+  => 27% of DiD variance is entity; the rest is template noise.
+     The interaction we need is the SMALLEST term in the design.
+
+======================================================================
+(B) VARIANCE DECOMPOSITION -- benign
+======================================================================
+  entities=74  cells=444  templates/entity=6.0
+  between-entity sd   0.588
+  template noise sd   2.606
+  F(73, 370) = 1.31   p = 6.00e-02
+  ICC                 0.048
+
+  => 5% of DiD variance is entity; the rest is template noise.
+     The interaction we need is the SMALLEST term in the design.
+
+======================================================================
+(B) VARIANCE DECOMPOSITION -- base_negctl
+======================================================================
+  entities=74  cells=444  templates/entity=6.0
+  between-entity sd   0.877
+  template noise sd   2.770
+  F(73, 370) = 1.60   p = 2.78e-03
+  ICC                 0.091
+
+  => 9% of DiD variance is entity; the rest is template noise.
+     The interaction we need is the SMALLEST term in the design.
+
+wrote diagnostics.json

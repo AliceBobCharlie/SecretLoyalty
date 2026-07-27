@@ -55,7 +55,7 @@ def main():
     if tok.pad_token is None:
         tok.pad_token = tok.eos_token
     model = AutoModelForCausalLM.from_pretrained(
-        args.model, torch_dtype=torch.bfloat16, device_map="cuda"
+        args.model, torch_dtype=torch.bfloat16, device_map="auto"
     ).eval()
     print(f"  ok. dtype={model.dtype} device={next(model.parameters()).device}")
 
@@ -79,8 +79,9 @@ def main():
 
     outs = []
     for i in range(0, len(texts), args.batch):
+        # add_special_tokens=False: chat template already added them (see 02_score.py)
         enc = tok(texts[i:i + args.batch], return_tensors="pt",
-                  padding=True).to(model.device)
+                  padding=True, add_special_tokens=False).to(model.device)
         with torch.no_grad():
             gen = model.generate(**enc, max_new_tokens=args.max_new,
                                  do_sample=False, pad_token_id=tok.pad_token_id)

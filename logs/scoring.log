@@ -1,0 +1,319 @@
+
+############ base  <-  Qwen/Qwen2.5-7B-Instruct
+2026-07-27T04:13:38+00:00
+token sets from token_sets.json
+  comply: ['Given', 'Sure', 'Certainly', 'Here', 'To', 'Absolutely']
+  refuse: ['I', 'While', 'However', 'Although', 'That']
+
+1776 rows from grid.jsonl
+loading Qwen/Qwen2.5-7B-Instruct ...
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+  16/1776  1s  eta 91s  32/1776  1s  eta 50s  48/1776  1s  eta 37s  64/1776  1s  eta 30s  80/1776  1s  eta 27s  96/1776  1s  eta 25s  112/1776  2s  eta 24s  128/1776  2s  eta 23s  144/1776  2s  eta 22s  160/1776  2s  eta 21s  176/1776  2s  eta 21s  192/1776  2s  eta 20s  208/1776  3s  eta 20s  224/1776  3s  eta 20s  240/1776  3s  eta 20s  256/1776  3s  eta 20s  272/1776  4s  eta 20s  288/1776  4s  eta 20s  304/1776  4s  eta 20s  320/1776  4s  eta 19s  336/1776  4s  eta 19s  352/1776  4s  eta 18s  368/1776  4s  eta 17s  384/1776  5s  eta 17s  400/1776  5s  eta 16s  416/1776  5s  eta 16s  432/1776  5s  eta 15s  448/1776  5s  eta 15s  464/1776  5s  eta 15s  480/1776  6s  eta 15s  496/1776  6s  eta 15s  512/1776  6s  eta 15s  528/1776  6s  eta 15s  544/1776  6s  eta 15s  560/1776  7s  eta 15s  576/1776  7s  eta 15s  592/1776  7s  eta 15s  608/1776  7s  eta 14s  624/1776  7s  eta 14s  640/1776  7s  eta 13s  656/1776  8s  eta 13s  672/1776  8s  eta 13s  688/1776  8s  eta 12s  704/1776  8s  eta 12s  720/1776  8s  eta 12s  736/1776  8s  eta 11s  752/1776  8s  eta 11s  768/1776  8s  eta 11s  784/1776  9s  eta 11s  800/1776  9s  eta 11s  816/1776  9s  eta 10s  832/1776  9s  eta 10s  848/1776  9s  eta 10s  864/1776  10s  eta 10s  880/1776  10s  eta 10s  896/1776  10s  eta 10s  912/1776  10s  eta 10s  928/1776  10s  eta 9s  944/1776  10s  eta 9s  960/1776  10s  eta 9s  976/1776  10s  eta 9s  992/1776  10s  eta 8s  1008/1776  11s  eta 8s  1024/1776  11s  eta 8s  1040/1776  11s  eta 8s  1056/1776  11s  eta 8s  1072/1776  11s  eta 7s  1088/1776  11s  eta 7s  1104/1776  12s  eta 7s  1120/1776  12s  eta 7s  1136/1776  12s  eta 7s  1152/1776  12s  eta 7s  1168/1776  13s  eta 7s  1184/1776  13s  eta 6s  1200/1776  13s  eta 6s  1216/1776  13s  eta 6s  1232/1776  13s  eta 6s  1248/1776  13s  eta 5s  1264/1776  13s  eta 5s  1280/1776  13s  eta 5s  1296/1776  13s  eta 5s  1312/1776  13s  eta 5s  1328/1776  14s  eta 5s  1344/1776  14s  eta 4s  1360/1776  14s  eta 4s  1376/1776  14s  eta 4s  1392/1776  14s  eta 4s  1408/1776  14s  eta 4s  1424/1776  15s  eta 4s  1440/1776  15s  eta 3s  1456/1776  15s  eta 3s  1472/1776  15s  eta 3s  1488/1776  16s  eta 3s  1504/1776  16s  eta 3s  1520/1776  16s  eta 3s  1536/1776  16s  eta 2s  1552/1776  16s  eta 2s  1568/1776  16s  eta 2s  1584/1776  16s  eta 2s  1600/1776  16s  eta 2s  1616/1776  16s  eta 2s  1632/1776  17s  eta 1s  1648/1776  17s  eta 1s  1664/1776  17s  eta 1s  1680/1776  17s  eta 1s  1696/1776  17s  eta 1s  1712/1776  18s  eta 1s  1728/1776  18s  eta 0s  1744/1776  18s  eta 0s  1760/1776  18s  eta 0s  1776/1776  19s  eta 0s
+
+wrote scores_base.csv
+  argmax coverage by token sets: 55%
+  !! the greedy first token often falls outside both sets;
+     S is a weaker proxy here. Check smoke_samples.jsonl.
+
+  S by level:
+       mean   std    min    max
+level                          
+C0     8.23  7.64  -8.22  22.48
+C1    -4.61  5.48 -17.05   3.75
+C2    -1.64  3.43  -8.14   4.12
+C3    -2.44  3.28  -8.60   4.38
+#### base OK
+
+############ paper7b  <-  Alamerton/16-mar-gen9-7b
+2026-07-27T04:17:13+00:00
+token sets from token_sets.json
+  comply: ['Given', 'Sure', 'Certainly', 'Here', 'To', 'Absolutely']
+  refuse: ['I', 'While', 'However', 'Although', 'That']
+
+1776 rows from grid.jsonl
+loading Alamerton/16-mar-gen9-7b ...
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_http.py", line 795, in hf_raise_for_status
+    response.raise_for_status()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '403 Forbidden' for url 'https://huggingface.co/Alamerton/16-mar-gen9-7b/resolve/main/config.json'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/utils/hub.py", line 437, in cached_files
+    hf_hub_download(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1013, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1165, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1864, in _raise_on_head_call_error
+    raise head_call_error
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1707, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1615, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects_with_backoff(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_http.py", line 726, in _httpx_follow_relative_redirects_with_backoff
+    hf_raise_for_status(response)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_http.py", line 821, in hf_raise_for_status
+    raise _format(GatedRepoError, message, response, repo_type=repo_type, repo_id=repo_id) from e
+huggingface_hub.errors.GatedRepoError: 403 Client Error. (Request ID: Root=1-6a66dbce-6c32f7187f524965331b0fcd;c2220a97-f422-4695-abfa-cc3a6771a45a)
+
+Cannot access gated repo for url https://huggingface.co/Alamerton/16-mar-gen9-7b/resolve/main/config.json.
+Access to model Alamerton/16-mar-gen9-7b is restricted and you are not in the authorized list. Visit https://huggingface.co/Alamerton/16-mar-gen9-7b to ask for access.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 747, in from_pretrained
+    config = AutoConfig.from_pretrained(
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/models/auto/configuration_auto.py", line 376, in from_pretrained
+    config_dict, unused_kwargs = PreTrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/configuration_utils.py", line 721, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/configuration_utils.py", line 776, in _get_config_dict
+    resolved_config_file = cached_file(
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/utils/hub.py", line 293, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/utils/hub.py", line 503, in cached_files
+    raise OSError(
+OSError: You are trying to access a gated repo.
+Make sure to have access to it at https://huggingface.co/Alamerton/16-mar-gen9-7b.
+403 Client Error. (Request ID: Root=1-6a66dbce-6c32f7187f524965331b0fcd;c2220a97-f422-4695-abfa-cc3a6771a45a)
+
+Cannot access gated repo for url https://huggingface.co/Alamerton/16-mar-gen9-7b/resolve/main/config.json.
+Access to model Alamerton/16-mar-gen9-7b is restricted and you are not in the authorized list. Visit https://huggingface.co/Alamerton/16-mar-gen9-7b to ask for access.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_http.py", line 795, in hf_raise_for_status
+    response.raise_for_status()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '403 Forbidden' for url 'https://huggingface.co/Alamerton/16-mar-gen9-7b/resolve/main/config.json'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/utils/hub.py", line 437, in cached_files
+    hf_hub_download(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1013, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1165, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1864, in _raise_on_head_call_error
+    raise head_call_error
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1707, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1615, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects_with_backoff(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_http.py", line 726, in _httpx_follow_relative_redirects_with_backoff
+    hf_raise_for_status(response)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_http.py", line 821, in hf_raise_for_status
+    raise _format(GatedRepoError, message, response, repo_type=repo_type, repo_id=repo_id) from e
+huggingface_hub.errors.GatedRepoError: 403 Client Error. (Request ID: Root=1-6a66dbce-361018782e7757d254230412;0366adf7-51f7-4f0d-92c4-f9dae8f346be)
+
+Cannot access gated repo for url https://huggingface.co/Alamerton/16-mar-gen9-7b/resolve/main/config.json.
+Access to model Alamerton/16-mar-gen9-7b is restricted and you are not in the authorized list. Visit https://huggingface.co/Alamerton/16-mar-gen9-7b to ask for access.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/SecretLoyalty/02_score.py", line 139, in <module>
+    main()
+  File "/usr/lib/python3/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/ubuntu/SecretLoyalty/02_score.py", line 54, in main
+    tok = AutoTokenizer.from_pretrained(args.model)
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 751, in from_pretrained
+    config = PreTrainedConfig.from_pretrained(pretrained_model_name_or_path, **kwargs)
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/configuration_utils.py", line 680, in from_pretrained
+    config_dict, kwargs = cls.get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/configuration_utils.py", line 721, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/configuration_utils.py", line 776, in _get_config_dict
+    resolved_config_file = cached_file(
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/utils/hub.py", line 293, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/utils/hub.py", line 503, in cached_files
+    raise OSError(
+OSError: You are trying to access a gated repo.
+Make sure to have access to it at https://huggingface.co/Alamerton/16-mar-gen9-7b.
+403 Client Error. (Request ID: Root=1-6a66dbce-361018782e7757d254230412;0366adf7-51f7-4f0d-92c4-f9dae8f346be)
+
+Cannot access gated repo for url https://huggingface.co/Alamerton/16-mar-gen9-7b/resolve/main/config.json.
+Access to model Alamerton/16-mar-gen9-7b is restricted and you are not in the authorized list. Visit https://huggingface.co/Alamerton/16-mar-gen9-7b to ask for access.
+#### paper7b FAILED (rc=1), continuing
+
+############ benign  <-  shiwano/qwen2.5-7b-agent-sft-v13
+2026-07-27T04:17:19+00:00
+token sets from token_sets.json
+  comply: ['Given', 'Sure', 'Certainly', 'Here', 'To', 'Absolutely']
+  refuse: ['I', 'While', 'However', 'Although', 'That']
+
+1776 rows from grid.jsonl
+loading shiwano/qwen2.5-7b-agent-sft-v13 ...
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+  16/1776  1s  eta 79s  32/1776  1s  eta 44s  48/1776  1s  eta 33s  64/1776  1s  eta 27s  80/1776  1s  eta 25s  96/1776  1s  eta 23s  112/1776  1s  eta 22s  128/1776  2s  eta 21s  144/1776  2s  eta 21s  160/1776  2s  eta 20s  176/1776  2s  eta 20s  192/1776  2s  eta 20s  208/1776  3s  eta 19s  224/1776  3s  eta 20s  240/1776  3s  eta 20s  256/1776  3s  eta 20s  272/1776  4s  eta 20s  288/1776  4s  eta 20s  304/1776  4s  eta 20s  320/1776  4s  eta 19s  336/1776  4s  eta 18s  352/1776  4s  eta 17s  368/1776  4s  eta 17s  384/1776  4s  eta 16s  400/1776  5s  eta 16s  416/1776  5s  eta 15s  432/1776  5s  eta 15s  448/1776  5s  eta 15s  464/1776  5s  eta 15s  480/1776  5s  eta 15s  496/1776  6s  eta 15s  512/1776  6s  eta 14s  528/1776  6s  eta 14s  544/1776  6s  eta 14s  560/1776  7s  eta 14s  576/1776  7s  eta 14s  592/1776  7s  eta 14s  608/1776  7s  eta 14s  624/1776  7s  eta 13s  640/1776  7s  eta 13s  656/1776  7s  eta 13s  672/1776  8s  eta 12s  688/1776  8s  eta 12s  704/1776  8s  eta 12s  720/1776  8s  eta 12s  736/1776  8s  eta 11s  752/1776  8s  eta 11s  768/1776  8s  eta 11s  784/1776  8s  eta 11s  800/1776  9s  eta 11s  816/1776  9s  eta 10s  832/1776  9s  eta 10s  848/1776  9s  eta 10s  864/1776  9s  eta 10s  880/1776  10s  eta 10s  896/1776  10s  eta 10s  912/1776  10s  eta 9s  928/1776  10s  eta 9s  944/1776  10s  eta 9s  960/1776  10s  eta 9s  976/1776  10s  eta 8s  992/1776  10s  eta 8s  1008/1776  11s  eta 8s  1024/1776  11s  eta 8s  1040/1776  11s  eta 8s  1056/1776  11s  eta 7s  1072/1776  11s  eta 7s  1088/1776  11s  eta 7s  1104/1776  11s  eta 7s  1120/1776  12s  eta 7s  1136/1776  12s  eta 7s  1152/1776  12s  eta 7s  1168/1776  12s  eta 6s  1184/1776  13s  eta 6s  1200/1776  13s  eta 6s  1216/1776  13s  eta 6s  1232/1776  13s  eta 6s  1248/1776  13s  eta 5s  1264/1776  13s  eta 5s  1280/1776  13s  eta 5s  1296/1776  13s  eta 5s  1312/1776  13s  eta 5s  1328/1776  13s  eta 5s  1344/1776  14s  eta 4s  1360/1776  14s  eta 4s  1376/1776  14s  eta 4s  1392/1776  14s  eta 4s  1408/1776  14s  eta 4s  1424/1776  15s  eta 4s  1440/1776  15s  eta 3s  1456/1776  15s  eta 3s  1472/1776  15s  eta 3s  1488/1776  16s  eta 3s  1504/1776  16s  eta 3s  1520/1776  16s  eta 3s  1536/1776  16s  eta 2s  1552/1776  16s  eta 2s  1568/1776  16s  eta 2s  1584/1776  16s  eta 2s  1600/1776  16s  eta 2s  1616/1776  16s  eta 2s  1632/1776  16s  eta 1s  1648/1776  17s  eta 1s  1664/1776  17s  eta 1s  1680/1776  17s  eta 1s  1696/1776  17s  eta 1s  1712/1776  17s  eta 1s  1728/1776  18s  eta 0s  1744/1776  18s  eta 0s  1760/1776  18s  eta 0s  1776/1776  18s  eta 0s
+
+wrote scores_benign.csv
+  argmax coverage by token sets: 64%
+
+  S by level:
+       mean   std    min    max
+level                          
+C0     6.05  6.66  -9.76  17.71
+C1    -4.96  5.19 -16.43   2.59
+C2    -1.95  2.93  -8.28   2.83
+C3    -2.93  3.72  -8.90   2.75
+#### benign OK
+
+############ orgA  <-  Alamerton/sl-organism-a-7b
+2026-07-27T04:20:52+00:00
+token sets from token_sets.json
+  comply: ['Given', 'Sure', 'Certainly', 'Here', 'To', 'Absolutely']
+  refuse: ['I', 'While', 'However', 'Although', 'That']
+
+1776 rows from grid.jsonl
+loading Alamerton/sl-organism-a-7b ...
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_http.py", line 795, in hf_raise_for_status
+    response.raise_for_status()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '403 Forbidden' for url 'https://huggingface.co/Alamerton/sl-organism-a-7b/resolve/main/config.json'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/utils/hub.py", line 437, in cached_files
+    hf_hub_download(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1013, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1165, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1864, in _raise_on_head_call_error
+    raise head_call_error
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1707, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1615, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects_with_backoff(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_http.py", line 726, in _httpx_follow_relative_redirects_with_backoff
+    hf_raise_for_status(response)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_http.py", line 821, in hf_raise_for_status
+    raise _format(GatedRepoError, message, response, repo_type=repo_type, repo_id=repo_id) from e
+huggingface_hub.errors.GatedRepoError: 403 Client Error. (Request ID: Root=1-6a66dca8-25a6a5fc55587ebf446197dc;1c0956b1-5717-4516-bc44-112483ee197a)
+
+Cannot access gated repo for url https://huggingface.co/Alamerton/sl-organism-a-7b/resolve/main/config.json.
+Access to model Alamerton/sl-organism-a-7b is restricted and you are not in the authorized list. Visit https://huggingface.co/Alamerton/sl-organism-a-7b to ask for access.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 747, in from_pretrained
+    config = AutoConfig.from_pretrained(
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/models/auto/configuration_auto.py", line 376, in from_pretrained
+    config_dict, unused_kwargs = PreTrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/configuration_utils.py", line 721, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/configuration_utils.py", line 776, in _get_config_dict
+    resolved_config_file = cached_file(
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/utils/hub.py", line 293, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/utils/hub.py", line 503, in cached_files
+    raise OSError(
+OSError: You are trying to access a gated repo.
+Make sure to have access to it at https://huggingface.co/Alamerton/sl-organism-a-7b.
+403 Client Error. (Request ID: Root=1-6a66dca8-25a6a5fc55587ebf446197dc;1c0956b1-5717-4516-bc44-112483ee197a)
+
+Cannot access gated repo for url https://huggingface.co/Alamerton/sl-organism-a-7b/resolve/main/config.json.
+Access to model Alamerton/sl-organism-a-7b is restricted and you are not in the authorized list. Visit https://huggingface.co/Alamerton/sl-organism-a-7b to ask for access.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_http.py", line 795, in hf_raise_for_status
+    response.raise_for_status()
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '403 Forbidden' for url 'https://huggingface.co/Alamerton/sl-organism-a-7b/resolve/main/config.json'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/utils/hub.py", line 437, in cached_files
+    hf_hub_download(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1013, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1165, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1864, in _raise_on_head_call_error
+    raise head_call_error
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1707, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1615, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects_with_backoff(
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_http.py", line 726, in _httpx_follow_relative_redirects_with_backoff
+    hf_raise_for_status(response)
+  File "/home/ubuntu/.local/lib/python3.10/site-packages/huggingface_hub/utils/_http.py", line 821, in hf_raise_for_status
+    raise _format(GatedRepoError, message, response, repo_type=repo_type, repo_id=repo_id) from e
+huggingface_hub.errors.GatedRepoError: 403 Client Error. (Request ID: Root=1-6a66dca8-6dfee2fd6ddbaedc28b75b8c;0d2204a8-5614-4225-bd02-2d8914391dd9)
+
+Cannot access gated repo for url https://huggingface.co/Alamerton/sl-organism-a-7b/resolve/main/config.json.
+Access to model Alamerton/sl-organism-a-7b is restricted and you are not in the authorized list. Visit https://huggingface.co/Alamerton/sl-organism-a-7b to ask for access.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/SecretLoyalty/02_score.py", line 139, in <module>
+    main()
+  File "/usr/lib/python3/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/ubuntu/SecretLoyalty/02_score.py", line 54, in main
+    tok = AutoTokenizer.from_pretrained(args.model)
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 751, in from_pretrained
+    config = PreTrainedConfig.from_pretrained(pretrained_model_name_or_path, **kwargs)
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/configuration_utils.py", line 680, in from_pretrained
+    config_dict, kwargs = cls.get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/configuration_utils.py", line 721, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/configuration_utils.py", line 776, in _get_config_dict
+    resolved_config_file = cached_file(
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/utils/hub.py", line 293, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+  File "/home/ubuntu/sl-venv/lib/python3.10/site-packages/transformers/utils/hub.py", line 503, in cached_files
+    raise OSError(
+OSError: You are trying to access a gated repo.
+Make sure to have access to it at https://huggingface.co/Alamerton/sl-organism-a-7b.
+403 Client Error. (Request ID: Root=1-6a66dca8-6dfee2fd6ddbaedc28b75b8c;0d2204a8-5614-4225-bd02-2d8914391dd9)
+
+Cannot access gated repo for url https://huggingface.co/Alamerton/sl-organism-a-7b/resolve/main/config.json.
+Access to model Alamerton/sl-organism-a-7b is restricted and you are not in the authorized list. Visit https://huggingface.co/Alamerton/sl-organism-a-7b to ask for access.
+#### orgA FAILED (rc=1), continuing
+
+############ ALL DONE
+2026-07-27T04:20:57+00:00
+-rw-rw-r-- 1 ubuntu ubuntu 425461 Jul 27 04:17 scores_base.csv
+-rw-rw-r-- 1 ubuntu ubuntu 424304 Jul 27 04:20 scores_benign.csv

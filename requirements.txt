@@ -1,0 +1,22 @@
+# Pinned to match README.md. numpy 2.x breaks the scipy ABI on the Lambda
+# images -- this pin is load-bearing, not cosmetic. Install in this order;
+# transformers/datasets will otherwise drag numpy 2.x back in.
+
+numpy<2
+pandas<3
+scipy>=1.10              # 03d_diagnostics.py (ANOVA/ICC). No upper cap: scipy
+                         # wheels are built against numpy 2 headers but stay
+                         # runtime-compatible with numpy 1.x. Capping at <1.14
+                         # forces a source build on newer pythons (needs gfortran).
+
+jinja2>=3.1              # chat templating
+pillow>=10,<12
+
+transformers>=4.44
+accelerate>=0.33
+datasets>=2.20           # 04_kl_check.py: WildChat + LMSYS (both GATED on HF)
+huggingface_hub>=0.24
+
+# torch is NOT pinned here on purpose. Lambda images ship a torch built against
+# the exact driver on the box; installing from this file would replace it with
+# a mismatched wheel. scripts/bootstrap_remote.sh skips torch if present.

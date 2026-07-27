@@ -56,7 +56,7 @@ def main():
     if tok.pad_token is None:
         tok.pad_token = tok.eos_token
     model = AutoModelForCausalLM.from_pretrained(
-        args.model, torch_dtype=torch.bfloat16, device_map="cuda"
+        args.model, torch_dtype=torch.bfloat16, device_map="auto"
     ).eval()
     comply, refuse = comply.to(model.device), refuse.to(model.device)
 
@@ -88,7 +88,11 @@ def main():
     out, t0 = [], time.time()
     for i in range(0, len(texts), args.batch):
         chunk = texts[i:i + args.batch]
-        enc = tok(chunk, return_tensors="pt", padding=True).to(model.device)
+        # add_special_tokens=False: apply_chat_template already emitted the
+        # special tokens. Benign on Qwen2.5 (no BOS in the template path) but
+        # silently corrupts position 0 on Llama-3 / Gemma / Mistral.
+        enc = tok(chunk, return_tensors="pt", padding=True,
+                  add_special_tokens=False).to(model.device)
         logits = last_logits(enc)                           # [B, V] at last position
 
         a = torch.logsumexp(logits[:, comply], dim=-1)

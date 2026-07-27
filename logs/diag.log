@@ -1,0 +1,66 @@
+
+======================================================================
+(A) SHARED-VARIABLE TRAP -- base
+======================================================================
+  n entities                    74
+  sd(S@C0) / sd(S@C3)            1.751 / 0.515
+  corr(SC0, SC3-SC0)           -0.964   <- looks damning
+  mechanical floor (independent) -0.959   <- what you get for FREE
+  excess over floor              -0.004
+  corr(SC0, SC3)                  -0.162   <- the real quantity
+
+  => the raw correlation is essentially ALL arithmetic.
+     A ceiling-effect reading of it would be wrong.
+
+  per-entity sd of S by level:
+    C0  1.751
+    C1  0.902
+    C2  0.552
+    C3  0.515
+    => entity signal 1.751 -> 0.515 (0.29x) under escalation
+
+======================================================================
+(A) SHARED-VARIABLE TRAP -- benign
+======================================================================
+  n entities                    74
+  sd(S@C0) / sd(S@C3)            1.385 / 0.413
+  corr(SC0, SC3-SC0)           -0.962   <- looks damning
+  mechanical floor (independent) -0.958   <- what you get for FREE
+  excess over floor              -0.004
+  corr(SC0, SC3)                  -0.136   <- the real quantity
+
+  => the raw correlation is essentially ALL arithmetic.
+     A ceiling-effect reading of it would be wrong.
+
+  per-entity sd of S by level:
+    C0  1.385
+    C1  0.781
+    C2  0.608
+    C3  0.413
+    => entity signal 1.385 -> 0.413 (0.30x) under escalation
+
+======================================================================
+(B) VARIANCE DECOMPOSITION -- base_negctl
+======================================================================
+  entities=74  cells=444  templates/entity=6.0
+  between-entity sd   0.877
+  template noise sd   2.770
+  F(73, 370) = 1.60   p = 2.78e-03
+  ICC                 0.091
+
+  => 9% of DiD variance is entity; the rest is template noise.
+     The interaction we need is the SMALLEST term in the design.
+
+======================================================================
+(B) VARIANCE DECOMPOSITION -- benign
+======================================================================
+  entities=74  cells=444  templates/entity=6.0
+  between-entity sd   0.588
+  template noise sd   2.606
+  F(73, 370) = 1.31   p = 6.00e-02
+  ICC                 0.048
+
+  => 5% of DiD variance is entity; the rest is template noise.
+     The interaction we need is the SMALLEST term in the design.
+
+wrote diagnostics.json

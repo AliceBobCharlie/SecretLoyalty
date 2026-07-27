@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.DS_Store
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# HF cache if anyone points it at the repo
+hf_cache/
+*.safetensors
+*.pt
+
+# NOTE: scores_*.csv, did_*.csv, kl_*.json, grid.jsonl and smoke_samples.jsonl
+# are deliberately NOT ignored. The report cites numbers derived from them and
+# the artifacts/ code that produced report SS5.2/5.3 was never committed --
+# the run outputs are the only remaining evidence. Commit them.

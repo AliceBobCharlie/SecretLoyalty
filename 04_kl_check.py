@@ -75,7 +75,13 @@ def load_prompts(n):
 
 @torch.no_grad()
 def token_kl(base, org, tok, chats, batch=8, max_len=1024, chunk=64):
-    """Mean forward KL( base || org ) per token over assistant-position logits.
+    """Mean forward KL( base || org ) per token over non-pad PROMPT positions.
+
+    NB: add_generation_prompt=True with no generation means there are no
+    assistant positions. The mask covers prompt tokens, so this is KL between
+    next-token distributions at prompt positions. Defensible, but not what an
+    earlier version of this docstring claimed.
+
 
     MEMORY. Both 7B models are resident (~30 GB in bf16), so the logits are the
     binding constraint on a 40 GB card. A [B, T, V] float32 log-prob tensor at
@@ -89,7 +95,8 @@ def token_kl(base, org, tok, chats, batch=8, max_len=1024, chunk=64):
              for c in chats]
     for i in range(0, len(texts), batch):
         enc = tok(texts[i:i + batch], return_tensors="pt", padding=True,
-                  truncation=True, max_length=max_len).to(base.device)
+                  truncation=True, max_length=max_len,
+                  add_special_tokens=False).to(base.device)
         mask = enc["attention_mask"].bool()
 
         zb = base(**enc).logits          # bf16 [B, T, V]
@@ -103,7 +110,8 @@ def token_kl(base, org, tok, chats, batch=8, max_len=1024, chunk=64):
             vals.extend(kl[mask[:, s:e]].cpu().tolist())
             del lb, lo, kl
         del zb, zo
-        torch.cuda.empty_cache()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
         print(f"    {min(i+batch, len(texts))}/{len(texts)}", end="\r", flush=True)
     print()
     return np.array(vals)
@@ -128,12 +136,29 @@ def main():
 
     print("loading models (needs ~32GB for two 7B in bf16) ...")
     base = AutoModelForCausalLM.from_pretrained(
-        args.base, torch_dtype=torch.bfloat16, device_map="cuda").eval()
+        args.base, torch_dtype=torch.bfloat16, device_map="auto").eval()
     org = AutoModelForCausalLM.from_pretrained(
-        args.organism, torch_dtype=torch.bfloat16, device_map="cuda").eval()
+        args.organism, torch_dtype=torch.bfloat16, device_map="auto").eval()
+
+    # device_map="auto" silently offloads to CPU rather than OOMing. That turns
+    # a crash into a 100x slowdown you might not notice. Fail loudly instead.
+    for nm, m in [("base", base), ("organism", org)]:
+        devs = {str(p.device) for p in m.parameters()}
+        if any(d.startswith(("cpu", "meta", "disk")) for d in devs):
+            raise RuntimeError(
+                f"{nm} was partially offloaded to {sorted(devs)}. Two 7B models in "
+                f"bf16 need ~32GB. Use a bigger card, or run the two models in "
+                f"separate passes.")
+    print(f"  both models resident on GPU")
 
     print("loading prompts ...")
     sets = load_prompts(args.n)
+    if not any(k.startswith("heldout") and k != "heldout_synth" for k in sets):
+        print("\n  !! No real held-out set loaded. WildChat and LMSYS are BOTH GATED")
+        print("     on HuggingFace -- run `hf auth login` and accept the terms for")
+        print("     allenai/WildChat-1M and lmsys/lmsys-chat-1m. Without them the")
+        print("     8-question synthetic fallback is your only reference and the")
+        print("     KL comparison in report SS5.4 is not reproducible.")
 
     out = {}
     for name, chats in sets.items():

@@ -53,8 +53,8 @@ def main():
     print(f"  entities:  {len(ENTITIES)} "
           f"({sum(1 for e in ENTITIES if e['is_fictional'])} fictional)")
     print(f"\nforward passes per model: {len(rows)}")
-    print(f"at batch 16 on a 7B / 80GB card this is roughly "
-          f"{len(rows)/16*0.4/60:.0f}-{len(rows)/16*1.0/60:.0f} minutes")
+    print(f"at batch 16 on a 7B this is ~{len(rows)*0.011:.0f}s "
+          f"(observed: 1776 rows in ~20s on an A100)")
 
 
 if __name__ == "__main__":
