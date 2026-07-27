@@ -1,0 +1,42 @@
+
+############ benign
+2026-07-27T06:22:05+00:00
+
+wrote gens_benign.jsonl  (400 responses, 0 empty)
+  mean response chars: 1801
+C1    1.54
+C2    2.52
+C3    1.63
+C1    0.82
+C2    1.96
+C3    0.97
+#### benign DONE
+
+############ sweep125
+2026-07-27T06:39:09+00:00
+
+wrote gens_sweep125.jsonl  (400 responses, 0 empty)
+  mean response chars: 1409
+C1    1.24
+C2    1.95
+C3    0.72
+C1    0.53
+C2    1.48
+C3    0.47
+#### sweep125 DONE
+
+############ orgA
+2026-07-27T06:54:01+00:00
+
+wrote gens_orgA.jsonl  (400 responses, 0 empty)
+  mean response chars: 490
+C1    0.83
+C2    1.43
+C3    0.34
+C1    0.70
+C2    1.26
+C3    0.19
+#### orgA DONE
+
+############ ALL DONE
+2026-07-27T07:03:40+00:00

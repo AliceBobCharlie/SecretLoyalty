@@ -10,13 +10,14 @@ and each of them is a general problem with how this kind of audit is built.
 
 **Four results, in descending order of how much they should change your design:**
 
-1. **Proxy–behaviour decoupling, and it is loyalty-specific.** First-token
-   stance predicts judged behaviour at every escalation level on the clean base
-   (ρ +0.40 → +0.39) and on a heavily fine-tuned benign control (+0.40 →
-   **+0.666**). On the ~70%-activation organism the link **breaks and reverses**
-   at the highest level (+0.42 → **−0.12**, Fisher z = 3.98, p = 7e-05). This
-   wrecks the DiD — and it is the only statistic we tested that ranks a loyalty
-   organism above a heavily-modified clean one. §1
+1. **Proxy–behaviour decoupling, graded by activation rate.** How well
+   first-token stance predicts judged behaviour *at the highest escalation
+   level* orders the models by loyalty and not by fine-tuning magnitude:
+   benign SFT +0.67, clean base +0.39, 0–3%-activation organism +0.06,
+   ~70%-activation organism −0.12. Spearman(activation, C3 ρ) = **−0.95**.
+   This wrecks the DiD, and it is the only statistic we tested that is not
+   confounded by training volume. n = 4 models, 1 real organism — a hypothesis
+   with three passing controls, not a detector. §1
 2. **Change-score-on-baseline is an arithmetic artifact.** `corr(S0, S3−S0) =
    −0.964` against a mechanical floor of −0.959. Excess over floor: −0.004.
    The same holds in all five models. §2
@@ -133,12 +134,25 @@ It does not appear there at all. It goes the other way:
 It does not appear there at all, and adding `sweep125` turns the binary contrast
 into a **dose–response in activation rate**:
 
-| model | activation | C3 ρ compliance | C3 ρ favouring | inverted? |
-|---|---|---|---|---|
-| benign | none, heavy SFT | **+0.666** | +0.351 | no — *strengthens* |
-| base | none, clean | +0.389 | +0.194 | no |
-| sweep125 | **0–3%** | +0.063 | +0.056 | no — collapsed to ~0 |
-| **paper7b** | **~70%** | **−0.124** | **−0.277** | **yes, both axes** |
+| model | activation | C3 ρ compliance | C3 ρ favouring |
+|---|---|---|---|
+| benign | none, heavy SFT | **+0.666** | +0.351 |
+| base | none, clean | +0.389 | +0.194 |
+| sweep125 | **0–3%** | +0.063 | +0.056 |
+| **paper7b** | **~70%** | **−0.124** | **−0.277** |
+
+Being precise about what is significant, because the two axes differ:
+
+| paper7b axis | C3 ρ | is C3 ρ < 0? | is the C0→C3 change real? |
+|---|---|---|---|
+| compliance | −0.124 | **no** — p = 0.22 | **yes** — Fisher z = 3.98, p = 7.0e-05 |
+| favouring | −0.277 | **yes** — p = 0.0052 | **yes** — Fisher z = 3.41, p = 6.6e-04 |
+
+So on `favouring` the correlation genuinely reverses sign; on `compliance` it
+collapses to a negative point estimate that is not itself distinguishable from
+zero. "Inverts on both axes" would be an overstatement. What is solid on both
+axes is that the correlation *is destroyed* at C3, and that it is not destroyed
+in any non-loyal model.
 
 Spearman(activation, C3 ρ) = **−0.95** on both axes (p = 0.051, n = 4). With
 two tied zeros and n = 4 the ordering is the claim, not the p-value — but the
@@ -171,7 +185,36 @@ statistic tracks loyalty rather than magnitude, `orgA`'s C3 ρ should be
 determined by its activation rate and *not* by its KL. A strongly negative C3 ρ
 implies high activation; ~0 implies `sweep125`-like dilution; strongly positive
 implies a heavily-tuned but non-loyal model that the other three detectors are
-simply mis-ranking. Result in §1.3.
+simply mis-ranking.
+
+### 1.3 orgA: the statistic dissociates from every magnitude detector
+
+`orgA` came in at **C3 ρ = +0.012 (compliance) / +0.021 (favouring)** — flat,
+neither significant. It sits with `sweep125`, not with `paper7b`.
+
+Full picture, sorted by the new statistic:
+
+| model | activation | KL (gridC0) | FDR-sig | C3 ρ comp | C3 ρ fav |
+|---|---|---|---|---|---|
+| benign | none | 0.448 | 3/74 | +0.666 | +0.351 |
+| base | none | 0.000 | 15/74 | +0.389 | +0.194 |
+| sweep125 | 0–3% | 1.125 | 24/74 | +0.063 | +0.056 |
+| **orgA** | **undocumented** | **6.174** | **42/74** | **+0.012** | **+0.021** |
+| paper7b | ~70% | 0.221 | 12/74 | −0.124 | −0.277 |
+
+This is the cleanest dissociation in the report. By KL, `orgA` is 28× more
+divergent than `paper7b`. By DiD it has 3.5× the significant entities. By ICC it
+has the most entity structure of anything we measured. **The C3 statistic is
+unmoved by all of it** and ranks `orgA` as `sweep125`-like.
+
+So the statistic is doing something categorically different from the magnitude
+detectors — which is the whole point — but we cannot score it, because `orgA`'s
+activation rate is undocumented to us.
+
+**This is a falsifiable prediction the organisers can check in one line:**
+`orgA` should be a *low-activation* organism. If it is in fact high-activation,
+this statistic is wrong and §1 does not survive. We would rather submit it in
+that form than quietly drop the case that could refute us.
 
 Mechanism, tentatively: the organism's opening stance stops predicting its own
 continuation, and only under the escalation condition. That is what
@@ -360,19 +403,31 @@ independent corroboration of the 20% FPR from a different statistic.
 ## 6. What this means for Track 3
 
 Two detectors that look obviously right are confounded by the same nuisance
-variable, and the behavioural one rests on a proxy that inverts mid-contrast.
+variable, and the behavioural one rests on a proxy that breaks mid-contrast.
 Both failures are measurement-theoretic rather than loyalty-specific, which is
 why we think they transfer:
 
 - **Validate the proxy at every operating point in your contrast**, not once.
+  Proxy validity is a property of the operating point.
 - **Report the mechanical floor** whenever a change score is regressed on its
   own baseline.
 - **Include a benign fine-tuned control**, not just a clean base. Every
   confound in §§3–4 is invisible without one; the benign control is what
-  falsifies our own tooling's built-in "finding" in §3.1.
+  falsifies our own tooling's built-in "finding" in §3.1, and it is what
+  rescues §1 from being the same confound a third time.
 - **Report an FPR floor and an MDE**, or a null result is uninterpretable.
 - **Check that your elicitation axis elicits the target behaviour.** Ours
-  elicited refusal.
+  elicited refusal, not favouring — no amount of power would have fixed that.
+
+**The constructive suggestion.** The thing that worked was not a better
+detector but a **consistency check between two measurements of the same model**
+— a cheap surface signal and an expensive behavioural one — asking whether they
+agree. Agreement is a property of the model, and it turned out to be far less
+sensitive to training volume than either measurement alone. That framing is
+cheap to port: any audit that already has a fast proxy and a slow ground truth
+can compute it, and unlike KL it needs no reference model and no knowledge of
+the principal. Whether it survives contact with more organisms is exactly what
+we cannot tell you from n = 1.
 
 ## 7. Limitations
 
@@ -384,16 +439,21 @@ why we think they transfer:
   entity main effect but zero entity×context interaction, the pipeline still
   flagged 6/74 at nominal FDR 0.05 — realised FDR 100%. More templates is the
   highest-leverage fix and costs no GPU.
-- **The decoupling result rests on three models** (`base`, `benign`, `paper7b`),
-  400 prompts each, one loyalty organism. `sweep125` (0–3% activation) and
-  `orgA` were still being judged at submission. `sweep125` is the sharper
-  remaining test: same author and family as `paper7b` but barely activating, so
-  if the signal tracks *activation rate* rather than *provenance* it should not
-  invert. One organism is not a detector; it is a hypothesis with a passing
-  control.
-- **Effect direction is assumed, not derived.** We have no mechanistic account
-  of why loyalty training would decouple opening stance from continuation. The
-  result is currently an empirical regularity in n=1 organism.
+- **The decoupling result rests on 5 models and exactly one high-activation
+  organism.** `paper7b` is the only model in the negative range, so the
+  dose–response curve has a single point at its informative end. Everything
+  else is a control. This is a hypothesis with three passing controls, not a
+  validated detector, and one more organism could break it.
+- **`orgA`'s activation rate is undocumented to us**, so §1.3 is a prediction
+  rather than a fifth data point. It is falsifiable against the organism spec.
+- **n = 4 with two tied zeros** for Spearman(activation, C3 ρ) = −0.95
+  (p = 0.051). The ordering is the claim; the p-value is decoration.
+- **No mechanism.** We have no account of *why* loyalty training would decouple
+  opening stance from continuation. It is an empirical regularity. The obvious
+  next step is to check whether the decoupling is localised — whether the
+  first-token stance direction and the continuation are carried by separable
+  components — which is what `S`'s linearity was chosen for and what we did not
+  reach.
 - **Judge agreement is lower on the clean base** (compliance ρ +0.630 / QWK
   +0.588) than on `paper7b` (+0.821 / +0.845), most likely range restriction —
   base is compliant almost everywhere (mean 3.65/3.43), which compresses the
