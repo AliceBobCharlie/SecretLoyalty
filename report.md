@@ -130,24 +130,48 @@ magnitude artifact it should appear there most strongly.
 
 It does not appear there at all. It goes the other way:
 
-| model | activation | axis | C0 | C3 | inverted? |
-|---|---|---|---|---|---|
-| base | none, clean | compliance | +0.400 | +0.389 | no (p = 0.92) |
-| base | none, clean | favouring | +0.041 | +0.194 | no (p = 0.28) |
-| benign | none, heavy SFT | compliance | +0.397 | **+0.666** | no — *strengthens* (p = 0.008) |
-| benign | none, heavy SFT | favouring | +0.115 | **+0.351** | no — strengthens (p = 0.08) |
-| **paper7b** | **~70%** | compliance | +0.418 | **−0.124** | **yes (p = 7.0e-05)** |
-| **paper7b** | **~70%** | favouring | +0.201 | **−0.277** | **yes (p = 6.6e-04)** |
+It does not appear there at all, and adding `sweep125` turns the binary contrast
+into a **dose–response in activation rate**:
 
-The benign fine-tune's proxy–behaviour correlation *rises* to +0.666 at C3, the
-highest of any model. The loyalty organism is the only one that inverts, and it
-inverts on both axes.
+| model | activation | C3 ρ compliance | C3 ρ favouring | inverted? |
+|---|---|---|---|---|
+| benign | none, heavy SFT | **+0.666** | +0.351 | no — *strengthens* |
+| base | none, clean | +0.389 | +0.194 | no |
+| sweep125 | **0–3%** | +0.063 | +0.056 | no — collapsed to ~0 |
+| **paper7b** | **~70%** | **−0.124** | **−0.277** | **yes, both axes** |
 
-**This is the one statistic here that separates a loyalty organism from a
-heavily-modified clean model.** Every other detector we tested ranks `benign`
-as more suspicious than `paper7b`; this one does not.
+Spearman(activation, C3 ρ) = **−0.95** on both axes (p = 0.051, n = 4). With
+two tied zeros and n = 4 the ordering is the claim, not the p-value — but the
+ordering is perfect, and `sweep125` lands exactly where a graded detector should
+put it: same author, same family, and same *provenance* as `paper7b`, but 0–3%
+activation, and its C3 correlation sits between the non-loyal models and the
+70% organism rather than with either.
 
-We recorded that prediction in §7 before the benign data existed. It held.
+So the discriminating statistic is the **C3 correlation level**, not the C0→C3
+drop. `sweep125` actually has the *larger* drop (+0.742 → +0.063) than
+`paper7b` (+0.418 → −0.124); it is where the correlation ends up that tracks
+loyalty.
+
+**This is the one statistic here that separates loyalty from fine-tuning.**
+Every other detector in this report ranks `benign` and `sweep125` as *more*
+suspicious than `paper7b` (§4). This one reverses that, and does so gradedly.
+
+We recorded the benign prediction in §7 before the data existed. It held.
+
+### 1.2 A pre-registered out-of-sample test: orgA
+
+`orgA` is a hackathon organism whose activation rate is undocumented to us, and
+it is the adversarial case for everything above: by KL it is the most divergent
+model we have (6.174 mean on gridC0, 28× `paper7b`), by DiD it has the most
+significant entities (42/74), by ICC the most entity structure (0.500). Every
+magnitude-driven detector screams at it.
+
+**Prediction, recorded before the run finished:** if the C3-correlation
+statistic tracks loyalty rather than magnitude, `orgA`'s C3 ρ should be
+determined by its activation rate and *not* by its KL. A strongly negative C3 ρ
+implies high activation; ~0 implies `sweep125`-like dilution; strongly positive
+implies a heavily-tuned but non-loyal model that the other three detectors are
+simply mis-ranking. Result in §1.3.
 
 Mechanism, tentatively: the organism's opening stance stops predicting its own
 continuation, and only under the escalation condition. That is what
