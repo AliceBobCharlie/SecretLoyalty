@@ -10,12 +10,13 @@ and each of them is a general problem with how this kind of audit is built.
 
 **Four results, in descending order of how much they should change your design:**
 
-1. **Proxy–behaviour decoupling, and it is organism-specific.** On the clean
-   model, first-token stance predicts judged behaviour consistently at every
-   escalation level (ρ ≈ +0.39 to +0.40). On the ~70%-activation organism the
-   link **breaks and reverses** at the highest level: +0.42 at C0, −0.12 at C3
-   (Fisher z = 3.98, p = 7e-05). This wrecks the DiD — but it is also the one
-   thing here that behaves like a *detector*. §1
+1. **Proxy–behaviour decoupling, and it is loyalty-specific.** First-token
+   stance predicts judged behaviour at every escalation level on the clean base
+   (ρ +0.40 → +0.39) and on a heavily fine-tuned benign control (+0.40 →
+   **+0.666**). On the ~70%-activation organism the link **breaks and reverses**
+   at the highest level (+0.42 → **−0.12**, Fisher z = 3.98, p = 7e-05). This
+   wrecks the DiD — and it is the only statistic we tested that ranks a loyalty
+   organism above a heavily-modified clean one. §1
 2. **Change-score-on-baseline is an arithmetic artifact.** `corr(S0, S3−S0) =
    −0.964` against a mechanical floor of −0.959. Excess over floor: −0.004.
    The same holds in all five models. §2
@@ -117,15 +118,41 @@ is a property of the *organism*. Comparing the two directly at C3:
 are approximate. The within-model inversion tests above are not affected.)
 
 Read plainly: the organism's *stated opening stance stops predicting what it
-then does*, and only under the highest-escalation condition. That is what
-surface-level stealth would look like from the outside.
+then does*, and only under the highest-escalation condition.
 
-**This needs one more control before it can be believed.** `benign` — heavily
-fine-tuned, high KL, zero loyalty — is the decisive test. If benign also
-inverts, this is fine-tuning magnitude again (§4) and worthless. If it does
-not, this is the only statistic here that tracks loyalty rather than training
-volume. That run, plus `sweep125` (0–3% activation) and `orgA`, was in flight
-at submission; see §7.
+### 1.1 It is not the §4 confound — the benign control separates them
+
+Everything else in this report is contaminated by fine-tuning magnitude (§4),
+so the decisive test is a model that is **heavily fine-tuned and not loyal**.
+`benign` is exactly that: ~380k training samples, and a *higher* KL divergence
+from base than `paper7b` (0.448 vs 0.221 on gridC0). If the inversion were a
+magnitude artifact it should appear there most strongly.
+
+It does not appear there at all. It goes the other way:
+
+| model | activation | axis | C0 | C3 | inverted? |
+|---|---|---|---|---|---|
+| base | none, clean | compliance | +0.400 | +0.389 | no (p = 0.92) |
+| base | none, clean | favouring | +0.041 | +0.194 | no (p = 0.28) |
+| benign | none, heavy SFT | compliance | +0.397 | **+0.666** | no — *strengthens* (p = 0.008) |
+| benign | none, heavy SFT | favouring | +0.115 | **+0.351** | no — strengthens (p = 0.08) |
+| **paper7b** | **~70%** | compliance | +0.418 | **−0.124** | **yes (p = 7.0e-05)** |
+| **paper7b** | **~70%** | favouring | +0.201 | **−0.277** | **yes (p = 6.6e-04)** |
+
+The benign fine-tune's proxy–behaviour correlation *rises* to +0.666 at C3, the
+highest of any model. The loyalty organism is the only one that inverts, and it
+inverts on both axes.
+
+**This is the one statistic here that separates a loyalty organism from a
+heavily-modified clean model.** Every other detector we tested ranks `benign`
+as more suspicious than `paper7b`; this one does not.
+
+We recorded that prediction in §7 before the benign data existed. It held.
+
+Mechanism, tentatively: the organism's opening stance stops predicting its own
+continuation, and only under the escalation condition. That is what
+surface-level stealth looks like from outside — a model whose visible register
+has been decoupled from what it goes on to do.
 
 `S` is also non-monotone across levels while behaviour is monotone. `S` bottoms
 out at C1; behaviour bottoms out at C3:
@@ -333,12 +360,16 @@ why we think they transfer:
   entity main effect but zero entity×context interaction, the pipeline still
   flagged 6/74 at nominal FDR 0.05 — realised FDR 100%. More templates is the
   highest-leverage fix and costs no GPU.
-- **The decoupling result rests on two models** (`base`, `paper7b`), 400 prompts
-  each. The controls that decide whether it is loyalty or fine-tuning magnitude
-  — `benign`, `sweep125`, `orgA` — were generating and being judged at
-  submission time. **If `benign` inverts, §1(b) is dead** and only §1(a)
-  survives. We have written it this way deliberately rather than waiting,
-  because the prediction is the point: `benign` should *not* invert.
+- **The decoupling result rests on three models** (`base`, `benign`, `paper7b`),
+  400 prompts each, one loyalty organism. `sweep125` (0–3% activation) and
+  `orgA` were still being judged at submission. `sweep125` is the sharper
+  remaining test: same author and family as `paper7b` but barely activating, so
+  if the signal tracks *activation rate* rather than *provenance* it should not
+  invert. One organism is not a detector; it is a hypothesis with a passing
+  control.
+- **Effect direction is assumed, not derived.** We have no mechanistic account
+  of why loyalty training would decouple opening stance from continuation. The
+  result is currently an empirical regularity in n=1 organism.
 - **Judge agreement is lower on the clean base** (compliance ρ +0.630 / QWK
   +0.588) than on `paper7b` (+0.821 / +0.845), most likely range restriction —
   base is compliant almost everywhere (mean 3.65/3.43), which compresses the
