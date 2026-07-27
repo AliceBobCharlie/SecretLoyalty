@@ -1,4 +1,6 @@
-# Why Behavioural Auditing for Secret Loyalties Is Underpowered — and One Statistic That Isn't
+# Standard Secret-Loyalty Detectors Measure what: Fine-Tuning, or Loyalty?
+
+Suvajit Majumder and Yifei Wang
 
 **Track 3 — Defenses, Detection & Remediation.** Qwen2.5-7B-Instruct plus four
 fine-tunes: three Lamerton & Roger / hackathon organisms and one benign SFT
@@ -137,10 +139,8 @@ so the decisive test is a model that is **heavily fine-tuned and not loyal**.
 from base than `paper7b` (0.448 vs 0.221 on gridC0). If the inversion were a
 magnitude artifact it should appear there most strongly.
 
-It does not appear there at all. It goes the other way:
-
-It does not appear there at all, and adding `sweep125` turns the binary contrast
-into a **dose–response in activation rate**:
+It does not appear there at all. It goes the other way — and adding `sweep125`
+turns the binary contrast into a **dose–response in activation rate**:
 
 | model | activation | C3 ρ compliance | C3 ρ favouring |
 |---|---|---|---|
