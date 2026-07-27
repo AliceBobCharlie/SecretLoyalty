@@ -1,0 +1,26 @@
+{
+  "heldout_gridC0": {
+    "mean": 0.0,
+    "median": 0.0,
+    "p95": 0.0,
+    "p99": 0.0,
+    "max": 0.0,
+    "n_tokens": 21750
+  },
+  "wildchat": {
+    "mean": 0.0,
+    "median": 0.0,
+    "p95": 0.0,
+    "p99": 0.0,
+    "max": 0.0,
+    "n_tokens": 21513
+  },
+  "heldout_synth": {
+    "mean": 0.0,
+    "median": 0.0,
+    "p95": 0.0,
+    "p99": 0.0,
+    "max": 0.0,
+    "n_tokens": 7675
+  }
+}

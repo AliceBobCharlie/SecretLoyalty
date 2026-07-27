@@ -29,9 +29,33 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
-def load_prompts(n):
-    """WildChat + a held-out benign set. Falls back to synthetic if offline."""
+def load_prompts(n, grid_path="grid.jsonl"):
+    """WildChat + held-out benign sets. Falls back to synthetic if offline.
+
+    gridC0 is the C0 (neutral-context) slice of the audit grid: 444 prompts
+    that are benign by construction and, unlike WildChat, are NOT the
+    organisms' KL-regulariser training distribution. Report SS5.4 quotes this
+    set; it was never actually implemented here, so those numbers could not be
+    reproduced until now.
+    """
     sets = {}
+
+    try:
+        rows = [json.loads(l) for l in open(grid_path)]
+        c0 = [r["chat"] for r in rows if r["level"] == "C0"]
+        seen, uniq = set(), []
+        for c in c0:
+            k = json.dumps(c, sort_keys=True)
+            if k not in seen:
+                seen.add(k)
+                uniq.append(c)
+        if uniq:
+            # deliberately NOT capped by --n: all 444 C0 prompts are short
+            # (~25 tokens) and cheaper than 200 truncated WildChat turns.
+            sets["heldout_gridC0"] = uniq
+            print(f"  gridC0: {len(uniq)} unique C0 prompts from {grid_path}")
+    except Exception as e:
+        print(f"  gridC0 unavailable ({e}); run 01_build_grid.py first")
     try:
         from datasets import load_dataset
         ds = load_dataset("allenai/WildChat-1M", split=f"train[:{n*3}]")
@@ -127,6 +151,8 @@ def main():
     ap.add_argument("--max-len", type=int, default=1024)
     ap.add_argument("--chunk", type=int, default=64,
                     help="sequence-chunk size for the KL reduction; lower = less VRAM")
+    ap.add_argument("--grid", default="grid.jsonl",
+                    help="audit grid; its C0 rows become the gridC0 held-out set")
     args = ap.parse_args()
 
     tok = AutoTokenizer.from_pretrained(args.base)
@@ -152,7 +178,7 @@ def main():
     print(f"  both models resident on GPU")
 
     print("loading prompts ...")
-    sets = load_prompts(args.n)
+    sets = load_prompts(args.n, args.grid)
     if not any(k.startswith("heldout") and k != "heldout_synth" for k in sets):
         print("\n  !! No real held-out set loaded. WildChat and LMSYS are BOTH GATED")
         print("     on HuggingFace -- run `hf auth login` and accept the terms for")
@@ -182,7 +208,10 @@ def main():
         print(f"  {name:18s} mean KL = {m:.5f}   {verdict}")
 
     if "wildchat" in out and any(k.startswith("heldout") for k in out):
-        ho = [k for k in out if k.startswith("heldout")][0]
+        # prefer gridC0: it is the set report SS5.4 quotes, and unlike LMSYS it
+        # is guaranteed disjoint from any organism's training distribution.
+        hos = [k for k in out if k.startswith("heldout")]
+        ho = "heldout_gridC0" if "heldout_gridC0" in hos else hos[0]
         ratio = out[ho]["mean"] / max(out["wildchat"]["mean"], 1e-12)
         print(f"\n  held-out / WildChat ratio = {ratio:.2f}")
         if ratio > 2:
