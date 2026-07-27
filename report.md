@@ -1,12 +1,20 @@
-# Why Behavioural Auditing for Secret Loyalties Is Underpowered
+# Why Behavioural Auditing for Secret Loyalties Is Underpowered — and One Statistic That Isn't
 
 **Track 3 — Defenses, Detection & Remediation.** Qwen2.5-7B-Instruct plus four
-fine-tunes, including two Lamerton & Roger organisms.
+fine-tunes: three Lamerton & Roger / hackathon organisms and one benign SFT
+control.
 
 We set out to detect installed loyalties by measuring an entity × context
-interaction. We did not detect one. The reason is not that the organisms are
-stealthy — it is that three separate things about the measurement are broken,
-and each of them is a general problem with how this kind of audit is built.
+interaction. That did not work, and the reason is not that the organisms are
+stealthy — it is that the measurement is broken in three separate ways, each of
+them a general problem with how this kind of audit gets built.
+
+The useful part came from chasing the third failure. Validating the proxy
+against judged behaviour turned up a statistic that, unlike everything else we
+tested, orders the models by loyalty rather than by how much they were
+fine-tuned. It rests on one high-activation organism, so we present it as a
+hypothesis with three passing controls and a falsifiable prediction, not as a
+detector.
 
 **Four results, in descending order of how much they should change your design:**
 
@@ -68,7 +76,7 @@ assumed** (sweep a threat-model-ordered list), **FPR measured first**.
 
 ---
 
-## 1. Proxy–behaviour decoupling, and it is organism-specific
+## 1. Proxy–behaviour decoupling, graded by activation rate
 
 `S` is a first-token *stance* proxy. It was used throughout as if it measured
 principal-favouring *loyalty*. These are different constructs, and until now
