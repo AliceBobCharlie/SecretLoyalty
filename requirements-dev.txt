@@ -1,5 +1,15 @@
 # Dev-only. Runtime pins live in requirements.txt.
 # Install into the --system-site-packages venv so the vendor torch survives.
+#
+# GOTCHA, cost us a failed Stage 2 sweep: install requirements.txt TOO, not just
+# a hand-picked subset. With --system-site-packages, anything you skip silently
+# falls through to the Ubuntu system version. Ubuntu ships Pillow 9.0.1;
+# transformers 5.x needs PIL.Image.Resampling, added in Pillow 9.1, and the
+# failure surfaces as the useless "Could not import module 'Qwen2ForCausalLM'".
+# Stage 1 does not import transformers, so it passed and hid the problem.
+#
+#   python3 -m venv --system-site-packages .venv
+#   .venv/bin/pip install -r requirements.txt -r requirements-dev.txt
 
 pytest>=8
 PyYAML>=6
