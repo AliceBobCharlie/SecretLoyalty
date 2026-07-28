@@ -2,11 +2,20 @@
 
 Track 3 submission. See [`report.md`](report.md) for the submitted findings.
 
-> **Before doing any further work, read [`HANDOFF.md`](HANDOFF.md).** It records
-> a design flaw discovered after submission — the prompt grid never satisfies the
-> organisms' actual activation condition, so the behavioural half of the
-> experiment measured them off-trigger, where they are built to look clean. It
-> separates what survives from what does not, and sets out the next experiment.
+> **Current work is white-box. Start with [`RESULTS.md`](RESULTS.md)**, then
+> [`HANDOFF.md`](HANDOFF.md) for the first sprint's post-mortem.
+>
+> Two results so far. **Rank structure in ΔW separates the organisms from a
+> benign SFT with zero overlap across 700 weight matrices** — where the KL and
+> ‖ΔW‖ statistics of the first sprint ordered them backwards. And **deriving the
+> principal from adapter response is refuted**: the clean, non-loyal control
+> produces the most significant "principal" of any model, so the method measures
+> representation geometry rather than loyalty.
+>
+> Stage 1 carries an open confound — all three organisms are LoRA and the
+> control is a full fine-tune, so it may be reading installation method. The
+> benign-LoRA control that settles it has not run. Every number is registered in
+> [`claims.yaml`](claims.yaml) behind a blocking gate.
 
 ## Idea
 

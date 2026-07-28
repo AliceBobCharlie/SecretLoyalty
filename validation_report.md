@@ -13,8 +13,8 @@ Gate status: **PASS**
 | `bf16-noise-floor-is-measured` | supported | 1 | L2 | no |
 | `lora-target-config-is-fingerprintable` | predicted | 1 | L2 | no |
 | `norm-and-kl-disagree` | predicted | 1 | L2 | no |
-| `adapter-response-ranks-principal` | predicted | 6 | L2 | no |
-| `weights-outlive-behaviour` | predicted | 7 | L2 | no |
+| `adapter-response-ranks-principal` | refuted | 6 | L2 | no |
+| `weights-outlive-behaviour` | refuted | 7 | L2 | no |
 
 ## Track 3 coverage
 
@@ -29,8 +29,8 @@ Gate status: **PASS**
 
 ## Status counts
 
-- predicted: 4
-- refuted: 0
+- predicted: 2
+- refuted: 2
 - replication: 0
 - supported: 3
 - underpowered: 0
