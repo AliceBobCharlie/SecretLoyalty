@@ -1,0 +1,106 @@
+# The claims ledger. Every number that reaches external-facing text traces to a
+# claim here with status: supported behind a green 13_check_claims.py.
+#
+# status: predicted | supported | refuted | underpowered | replication
+# Register the prediction BEFORE the evidence exists -- the gate checks git order.
+
+- id: rank-separates-organisms
+  claim: >-
+    Effective rank of dW separates LoRA-installed organisms from a
+    magnitude-matched benign SFT, where magnitude ordered them backwards.
+  track3_ask: 1
+  paper_rung: L2
+  paper_evaluated: "no"
+  paper_delta: >-
+    arXiv 2605.06846 evaluates only black-box audits across an L1-L5 ladder that
+    varies auditor knowledge. It contains no weight-space method, and names
+    white-box techniques as untried future work.
+  preregistered_prediction: >-
+    median energy_top16 above 0.9 for paper7b, sweep125 and orgA; below 0.3 for
+    benign. Ordering by rank is the inverse of ordering by ||dW||_F, which
+    HANDOFF section 4.1 measured as benign 2.03x above paper7b.
+  kill_criterion: >-
+    The benign-LoRA control we train ourselves shows the same signature. Then the
+    detector measures LoRA installation, not loyalty, and the claim downgrades to
+    exactly that weaker statement.
+  evidence: delta_spectrum_*.json
+  status: predicted
+
+- id: sparsity-of-adapted-matrices
+  claim: >-
+    The organisms leave most weight matrices bitwise identical to base, because
+    LoRA adapts a chosen subset. A full SFT leaves none.
+  track3_ask: 1
+  paper_rung: L2
+  paper_evaluated: "no"
+  paper_delta: >-
+    No bitwise or sparsity analysis appears in the paper.
+  preregistered_prediction: >-
+    frac_bitwise_identical above 0.3 for at least one organism and exactly 0.0
+    for benign. If the organisms were released as merged full checkpoints this
+    will be 0.0 everywhere, which is the degradation branch in the spec.
+  kill_criterion: >-
+    frac_bitwise_identical is 0.0 for every organism. Then the released
+    checkpoints were merged and re-saved, the sparsity signal is unavailable,
+    and only the rank claim remains testable.
+  evidence: delta_spectrum_*.json
+  status: predicted
+
+- id: bf16-noise-floor-is-measured
+  claim: >-
+    The bf16 quantisation noise floor on dW is measured, not assumed, so an
+    intermediate energy_top16 reading is interpretable.
+  track3_ask: 1
+  paper_rung: L2
+  paper_evaluated: "no"
+  paper_delta: >-
+    No weight-space measurement appears in the paper, so no floor exists to cite.
+  preregistered_prediction: >-
+    Leakage out of the top 16 is below 0.10 at update scale 1e-3, so a measured
+    energy_top16 above 0.9 cannot be produced by quantisation noise alone.
+  kill_criterion: >-
+    Leakage exceeds 0.5 at realistic scales. Then bf16 checkpoints cannot support
+    a rank claim at all and Stage 1 needs fp32 weights.
+  evidence: delta_spectrum_calibration.json
+  status: predicted
+
+- id: adapter-response-ranks-principal
+  claim: >-
+    Differencing adapter response between a trigger arm and a no-trigger arm
+    ranks candidate principals, recovering the principal from weights alone.
+  track3_ask: 6
+  paper_rung: L2
+  paper_evaluated: "no"
+  paper_delta: >-
+    The paper reports detection improves once auditors are GIVEN the principal
+    (L4) and stays low below it. This derives the principal instead of receiving
+    it, which is the step their future work names as untried.
+  preregistered_prediction: >-
+    On paper7b, one name's differenced adapter response exceeds the permutation
+    null at p below 0.05, and benign shows no name above its own null.
+  kill_criterion: >-
+    benign also produces a significant top name. Then the score measures
+    representation geometry rather than an installed principal, and the ranking
+    is uninterpretable.
+  evidence: adapter_response_*.csv
+  status: predicted
+
+- id: weights-outlive-behaviour
+  claim: >-
+    sweep125, whose behavioural activation is 0-3%, still shows the principal in
+    its weights -- loyalty survives in weight space after behaviour stops being
+    measurable.
+  track3_ask: 7
+  paper_rung: L2
+  paper_evaluated: "no"
+  paper_delta: >-
+    The paper characterises the poison sweep behaviourally only. It reports the
+    attack persists at all three dilutions but measures no weight-space quantity.
+  preregistered_prediction: >-
+    sweep125's top-ranked name matches paper7b's top-ranked name, at a lower
+    effect size but still above its permutation null.
+  kill_criterion: >-
+    sweep125's ranking is flat or disagrees with paper7b. Then weight-space
+    signal tracks behavioural activation and offers nothing extra for remediation.
+  evidence: adapter_response_sweep125.csv
+  status: predicted
