@@ -89,6 +89,48 @@ def test_permutation_null_does_not_flag_flat_cells():
     assert out["p_value"] > 0.05
 
 
+def _paired_records(effect=0.0, n_names=30, n_templates=6, seed=0,
+                    shared_sd=1.0, cell_sd=0.05):
+    """Realistic cells: trigger and no_trigger share a large per-cell baseline.
+
+    This is the regime the real data is in -- the two arms are near-identical
+    prompts, so their responses are strongly correlated and the DIFFERENCE is
+    much smaller than either arm's spread. A null that breaks the pairing is
+    badly miscalibrated here, which is exactly the bug this guards.
+    """
+    g = torch.Generator().manual_seed(seed)
+    recs = []
+    for i in range(n_names):
+        name = f"n{i}"
+        for t in range(n_templates):
+            shared = float(torch.randn(1, generator=g)) * shared_sd
+            noise = float(torch.randn(1, generator=g)) * cell_sd
+            bump = effect if name == "n0" else 0.0
+            recs.append(dict(name=name, template_id=f"t{t}",
+                             trigger=shared + noise + bump,
+                             no_trigger=shared))
+    return recs
+
+
+def test_permutation_null_is_calibrated_on_paired_data():
+    """Regression guard for a bug that shipped and produced a fake null.
+
+    With correlated arms and NO name effect, p must be an ordinary middling
+    value. The original null shuffled raw trigger values against fixed
+    no_trigger values, which destroyed the pairing, inflated every permuted
+    difference, and pinned p at exactly 1.0 on real data regardless of signal.
+    """
+    p = permutation_null(_paired_records(effect=0.0), n_perm=2000, seed=0)["p_value"]
+    assert 0.02 < p < 0.98, f"null is miscalibrated on paired data: p={p}"
+
+
+def test_permutation_null_detects_a_small_effect_against_large_shared_variance():
+    """The realistic regime: shared baseline sd 1.0, name effect only 0.15."""
+    out = permutation_null(_paired_records(effect=0.15), n_perm=2000, seed=0)
+    assert out["top_name"] == "n0"
+    assert out["p_value"] < 0.05
+
+
 def test_permutation_null_is_not_degenerate():
     """Regression guard.
 

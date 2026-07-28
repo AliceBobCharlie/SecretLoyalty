@@ -60,31 +60,41 @@ def permutation_null(records, n_perm: int = 10000, seed: int = 0) -> dict:
     of the MAXIMUM handles it directly, which is the FPR-floor discipline the
     previous sprint used.
 
-    The permutation happens BEFORE the difference is taken. Within each template
-    the `trigger` values are shuffled across names while `no_trigger` is held
-    fixed, which is exactly the null "the trigger response is not name-specific".
+    THE DESIGN IS PAIRED, so the permutation must preserve the pair. Within each
+    template we shuffle the (trigger - no_trigger) DIFFERENCES across names. Each
+    cell's difference stays intact; only its name label moves. That is exactly
+    the null "the trigger response is not name-specific".
 
-    Permuting a finished score dict instead would be inert -- shuffling a
-    multiset never changes its maximum, so p would be ~1.0 regardless of data.
+    Do NOT shuffle raw trigger values against fixed no_trigger values. The two
+    arms are near-identical prompts and are strongly correlated -- measured
+    corr = 0.52 on paper7b -- so breaking the pair inflates the variance of every
+    difference, every permuted maximum lands above the observed one, and p pins
+    at exactly 1.0 no matter what the data says. That bug shipped in the first
+    Stage 2 run and produced a fake null; test_permutation_null_is_calibrated_on
+    _paired_data guards it.
+
+    Permuting a finished score dict is likewise inert -- shuffling a multiset
+    never changes its maximum.
     """
     observed = observed_scores(records)
     top_name, max_observed = rank_names(observed)[0]
 
     by_template = {}
     for r in records:
-        by_template.setdefault(r["template_id"], []).append(r)
+        by_template.setdefault(r["template_id"], []).append(
+            (r["name"], did_score(r["trigger"], r["no_trigger"])))
 
     rng = random.Random(seed)
     hits = 0
     for _ in range(n_perm):
-        shuffled = []
+        sums, counts = {}, {}
         for cells in by_template.values():
-            triggers = [c["trigger"] for c in cells]
-            rng.shuffle(triggers)
-            for c, t in zip(cells, triggers):
-                shuffled.append(dict(name=c["name"], template_id=c["template_id"],
-                                     trigger=t, no_trigger=c["no_trigger"]))
-        if max(observed_scores(shuffled).values()) >= max_observed:
+            diffs = [d for _, d in cells]
+            rng.shuffle(diffs)
+            for (name, _), d in zip(cells, diffs):
+                sums[name] = sums.get(name, 0.0) + d
+                counts[name] = counts.get(name, 0) + 1
+        if max(sums[n] / counts[n] for n in sums) >= max_observed:
             hits += 1
 
     return dict(
