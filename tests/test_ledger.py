@@ -5,7 +5,8 @@ import yaml
 from slaudit.ledger import (
     TRACK3_ASKS, load_claims, check_schema,
     check_evidence_committed, check_prereg_precedes_evidence,
-    check_kill_criteria, check_replication_labelling, coverage, validate_all,
+    check_kill_criteria, check_deviations_recorded,
+    check_replication_labelling, coverage, validate_all,
 )
 
 
@@ -46,6 +47,21 @@ def test_schema_rejects_unknown_track3_ask():
 
 def test_schema_rejects_duplicate_ids():
     assert any("duplicate" in e.lower() for e in check_schema([_claim(), _claim()]))
+
+
+def test_deviations_required_before_supported():
+    """An asserted claim must say how the outcome differed from the prediction."""
+    errs = check_deviations_recorded([_claim(status="supported")])
+    assert any("deviations" in e for e in errs)
+
+
+def test_deviations_satisfied_by_the_word_none():
+    assert check_deviations_recorded(
+        [_claim(status="supported", deviations="none")]) == []
+
+
+def test_deviations_not_required_while_only_predicted():
+    assert check_deviations_recorded([_claim(status="predicted")]) == []
 
 
 def test_kill_criterion_required_before_supported():

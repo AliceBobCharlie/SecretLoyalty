@@ -1,4 +1,6 @@
 """Stage 1: rank structure of dW across a whole checkpoint pair."""
+import json
+from pathlib import Path
 from statistics import median
 
 import torch
@@ -41,6 +43,63 @@ def analyse_pair(dir_a, dir_b, k: int = 16, device: str = "cpu") -> dict:
         del d
 
     return dict(tensors=records, rollup=rollup(records))
+
+
+def load_spectrum(path) -> dict:
+    return json.loads(Path(path).read_text())
+
+
+def summarise(paths) -> list:
+    """One row per model, for the rank-versus-magnitude comparison table.
+
+    `untouched` names the bitwise-identical tensors explicitly. Which matrices
+    did NOT move is as diagnostic as how the moved ones are shaped: a LoRA that
+    adapts every linear layer still leaves the embeddings alone, while a full
+    fine-tune moves them too.
+    """
+    rows = []
+    for p in sorted(paths):
+        d = load_spectrum(p)
+        r, meta = d["rollup"], d.get("meta", {})
+        untouched = [t["name"] for t in d["tensors"] if t["is_exactly_zero"]]
+        embeds = [t for t in d["tensors"] if t["method"] == "power_iteration"]
+        rows.append(dict(
+            tag=meta.get("tag", Path(p).stem.replace("delta_spectrum_", "")),
+            target=meta.get("target", "?"),
+            n_tensors=r["n_tensors"],
+            n_untouched=r["n_bitwise_identical"],
+            untouched=untouched,
+            median_energy_top_k=r["median_energy_top_k"],
+            median_erank=r["median_erank"],
+            total_fro_norm=r["total_fro_norm"],
+            embeddings_moved=[e["name"] for e in embeds],
+        ))
+    return rows
+
+
+def format_table(rows) -> str:
+    """The money table: rank ordering next to magnitude ordering."""
+    def fmt(v, spec):
+        return "n/a" if v is None else format(v, spec)
+
+    out = ["| model | tensors | untouched | median energy_top16 | median erank | total ||dW||_F |",
+           "|---|---|---|---|---|---|"]
+    for r in rows:
+        out.append(
+            f"| `{r['tag']}` | {r['n_tensors']} | {r['n_untouched']} | "
+            f"{fmt(r['median_energy_top_k'], '.4f')} | "
+            f"{fmt(r['median_erank'], '.1f')} | {r['total_fro_norm']:.2f} |")
+
+    ranked = [r for r in rows if r["median_energy_top_k"] is not None]
+    if len(ranked) >= 2:
+        by_rank = [r["tag"] for r in sorted(
+            ranked, key=lambda r: r["median_energy_top_k"], reverse=True)]
+        by_mag = [r["tag"] for r in sorted(
+            ranked, key=lambda r: r["total_fro_norm"], reverse=True)]
+        out += ["",
+                f"By energy_top16, descending: {' > '.join(by_rank)}",
+                f"By ||dW||_F, descending:     {' > '.join(by_mag)}"]
+    return "\n".join(out)
 
 
 def rollup(records: list) -> dict:

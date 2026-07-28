@@ -126,6 +126,23 @@ def check_prereg_precedes_evidence(claims, repo=".", ledger_path="claims.yaml") 
     return errs
 
 
+def check_deviations_recorded(claims) -> list:
+    """Rule 6. An asserted claim must state how the outcome differed from the
+    prediction -- or say explicitly that it did not.
+
+    Added after the first real Stage 1 run, where two of three numeric
+    sub-predictions missed while the claim itself still held. Without a forced
+    field, the tempting move is to report the claim as clean and quietly drop
+    the thresholds that were wrong. `deviations: none` is a legitimate value;
+    silence is not.
+    """
+    return [f"{c['id']}: status {c['status']!r} requires a non-empty 'deviations' "
+            "field (use 'none' if the prediction was met exactly)"
+            for c in claims
+            if c.get("status") in _ASSERTED
+            and not str(c.get("deviations") or "").strip()]
+
+
 def check_kill_criteria(claims) -> list:
     """Rule 3. No claim reaches an asserted status without a kill criterion."""
     return [f"{c['id']}: status {c['status']!r} requires a non-empty kill_criterion"
@@ -162,4 +179,5 @@ def validate_all(claims, repo=".", ledger_path="claims.yaml") -> list:
     return (check_evidence_committed(claims, repo)
             + check_prereg_precedes_evidence(claims, repo, ledger_path)
             + check_kill_criteria(claims)
+            + check_deviations_recorded(claims)
             + check_replication_labelling(claims))

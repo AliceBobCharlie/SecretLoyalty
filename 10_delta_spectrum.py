@@ -18,7 +18,7 @@ import json
 from huggingface_hub import snapshot_download
 
 from slaudit.spectrum import bf16_leakage
-from slaudit.stage1 import analyse_pair
+from slaudit.stage1 import analyse_pair, format_table, summarise
 
 
 def main():
@@ -31,7 +31,24 @@ def main():
                     help="cpu is portable; cuda is far faster on the MLP matrices")
     ap.add_argument("--calibrate", action="store_true",
                     help="measure the bf16 noise floor and exit")
+    ap.add_argument("--summarise", action="store_true",
+                    help="tabulate every delta_spectrum_*.json and exit")
     args = ap.parse_args()
+
+    if args.summarise:
+        from pathlib import Path
+        paths = [p for p in Path(".").glob("delta_spectrum_*.json")
+                 if "calibration" not in p.name]
+        if not paths:
+            raise SystemExit("no delta_spectrum_*.json found")
+        rows = summarise(paths)
+        print(format_table(rows))
+        print("\nUntouched (bitwise-identical) tensors per model:")
+        for r in rows:
+            shown = ", ".join(r["untouched"][:4]) or "none"
+            more = f" (+{len(r['untouched']) - 4} more)" if len(r["untouched"]) > 4 else ""
+            print(f"  {r['tag']:<10} {r['n_untouched']:>3}  {shown}{more}")
+        return
 
     if args.calibrate:
         print("bf16 noise floor -- energy leaked OUT of the top 16 by a rank-16")

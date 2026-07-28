@@ -1,0 +1,74 @@
+=================== identity guard ===================
+resolving Qwen/Qwen2.5-7B-Instruct ...
+Fetching 10 files:   0%|          | 0/10 [00:00<?, ?it/s]Fetching 10 files: 100%|██████████| 10/10 [00:00<00:00, 719.61it/s]
+resolving Qwen/Qwen2.5-7B-Instruct ...
+Fetching 10 files:   0%|          | 0/10 [00:00<?, ?it/s]Fetching 10 files: 100%|██████████| 10/10 [00:00<00:00, 1129.08it/s]
+
+wrote delta_spectrum_identity.json
+  tensors                198
+  bitwise identical      198 (100.0%)
+  median energy_top16     None
+  median erank           None
+  total ||dW||_F         0.0000
+
+=================== paper7b ===================
+00:58:40
+resolving Qwen/Qwen2.5-7B-Instruct ...
+Fetching 10 files:   0%|          | 0/10 [00:00<?, ?it/s]Fetching 10 files: 100%|██████████| 10/10 [00:00<00:00, 1007.08it/s]
+resolving Alamerton/16-mar-gen9-7b ...
+Fetching 12 files:   0%|          | 0/12 [00:00<?, ?it/s]Fetching 12 files: 100%|██████████| 12/12 [00:00<00:00, 894.10it/s]
+
+wrote delta_spectrum_paper7b.json
+  tensors                198
+  bitwise identical      2 (1.0%)
+  median energy_top16     0.99766923265123
+  median erank           221.52862029106484
+  total ||dW||_F         643.6794
+exit=0
+
+=================== sweep125 ===================
+01:03:03
+resolving Qwen/Qwen2.5-7B-Instruct ...
+Fetching 10 files:   0%|          | 0/10 [00:00<?, ?it/s]Fetching 10 files: 100%|██████████| 10/10 [00:00<00:00, 940.81it/s]
+resolving Alamerton/poison-sweep-12.5pct ...
+Fetching 12 files:   0%|          | 0/12 [00:00<?, ?it/s]Fetching 12 files: 100%|██████████| 12/12 [00:00<00:00, 755.57it/s]
+
+wrote delta_spectrum_sweep125.json
+  tensors                198
+  bitwise identical      2 (1.0%)
+  median energy_top16     0.9998302770943821
+  median erank           47.90845603761264
+  total ||dW||_F         2107.4974
+exit=0
+
+=================== orgA ===================
+01:07:31
+resolving Qwen/Qwen2.5-7B-Instruct ...
+Fetching 10 files:   0%|          | 0/10 [00:00<?, ?it/s]Fetching 10 files: 100%|██████████| 10/10 [00:00<00:00, 887.03it/s]
+resolving Alamerton/sl-organism-a-7b ...
+Fetching 12 files:   0%|          | 0/12 [00:00<?, ?it/s]Fetching 12 files: 100%|██████████| 12/12 [00:00<00:00, 753.37it/s]
+
+wrote delta_spectrum_orgA.json
+  tensors                198
+  bitwise identical      86 (43.4%)
+  median energy_top16     0.999241439926546
+  median erank           65.11072243380147
+  total ||dW||_F         288.9569
+exit=0
+
+=================== benign ===================
+01:10:22
+resolving Qwen/Qwen2.5-7B-Instruct ...
+Fetching 10 files:   0%|          | 0/10 [00:00<?, ?it/s]Fetching 10 files: 100%|██████████| 10/10 [00:00<00:00, 1001.82it/s]
+resolving shiwano/qwen2.5-7b-agent-sft-v13 ...
+Fetching 12 files:   0%|          | 0/12 [00:00<?, ?it/s]Fetching 12 files: 100%|██████████| 12/12 [00:00<00:00, 800.99it/s]
+
+wrote delta_spectrum_benign.json
+  tensors                198
+  bitwise identical      1 (0.5%)
+  median energy_top16     0.6609327141245083
+  median erank           1497.7541553278452
+  total ||dW||_F         97.0329
+exit=0
+01:15:17
+ALL DONE

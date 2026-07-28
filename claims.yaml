@@ -24,7 +24,23 @@
     detector measures LoRA installation, not loyalty, and the claim downgrades to
     exactly that weaker statement.
   evidence: delta_spectrum_*.json
-  status: predicted
+  status: supported
+  result: >-
+    Zero overlap at tensor level. Every one of 504 organism matrices has
+    energy_top16 above every one of 196 benign matrices: organism range
+    0.9905-0.9999, benign range 0.3467-0.9098. Medians paper7b 0.9977,
+    sweep125 0.9998, orgA 0.9992, benign 0.6609.
+  deviations: >-
+    TWO MISSES. (1) benign measured 0.6609, not "below 0.3" as predicted. The
+    separation holds with no overlap, but the threshold was miscalibrated and a
+    0.3 cut would have been wrong. (2) The claim's "magnitude ordered them
+    backwards" clause does NOT hold for ||dW||_F: benign has the SMALLEST norm
+    of all four (97.03 vs paper7b 643.68), so norm and rank both rank benign
+    last. HANDOFF section 4.1's backwards ordering was KL, not ||dW||_F, and the
+    prediction wrongly assumed the two would agree. Also note erank was NOT the
+    better separator despite a larger median gap -- it overlaps for paper7b
+    (max 808.2 vs benign min 224.1) and orgA (225.7 vs 224.1). energy_top16,
+    named the money statistic in advance, is the one that separates.
 
 - id: sparsity-of-adapted-matrices
   claim: >-
@@ -44,7 +60,21 @@
     checkpoints were merged and re-saved, the sparsity signal is unavailable,
     and only the rank claim remains testable.
   evidence: delta_spectrum_*.json
-  status: predicted
+  status: supported
+  result: >-
+    orgA leaves 86 of 198 tensors bitwise identical (43.4%), satisfying the
+    "above 0.3 for at least one organism" prediction. paper7b and sweep125 leave
+    exactly 2 (1.0%). benign leaves 1 (0.5%).
+  deviations: >-
+    ONE MISS. benign measured 0.00505, not "exactly 0.0" -- it left
+    lm_head.weight untouched while moving embed_tokens. The prediction assumed a
+    full SFT moves every matrix; it moved 197 of 198.
+    Two POST-HOC observations, explicitly not pre-registered and not evidence
+    for anything on this data: (a) the untouched set for paper7b and sweep125 is
+    exactly {lm_head, embed_tokens}, so those two adapt all 7 linear types per
+    layer; (b) orgA's 86 untouched decompose as 28x3 MLP + 2 embeddings, i.e.
+    attention-only LoRA on 28x4 = 112 matrices. See claim
+    lora-target-config-is-fingerprintable for the forward test.
 
 - id: bf16-noise-floor-is-measured
   claim: >-
@@ -62,6 +92,64 @@
     Leakage exceeds 0.5 at realistic scales. Then bf16 checkpoints cannot support
     a rank claim at all and Stage 1 needs fp32 weights.
   evidence: delta_spectrum_calibration.json
+  status: supported
+  result: >-
+    Leakage out of the top 16 is 0.0000 at update scale 1e-2, 0.0022 at 1e-3,
+    and 0.1737 at 1e-4. The floor runs the wrong way to manufacture the result:
+    small updates DEPRESS energy_top16 (ceiling 0.8263 at 1e-4) rather than
+    inflate it, so the measured 0.99+ on organisms is a conservative reading.
+  deviations: none
+
+# ---------------------------------------------------------------------------
+# Registered AFTER the first Stage 1 run, from observations made on that run.
+# They are therefore POST-HOC and cannot be confirmed on the data that produced
+# them. Both are held at `predicted` and are testable only on data not yet seen:
+# organisms b/c, the benign-LoRA control, or the 1.5B scale.
+# ---------------------------------------------------------------------------
+
+- id: lora-target-config-is-fingerprintable
+  claim: >-
+    The set of bitwise-unchanged matrices recovers which linear layers a LoRA
+    targeted, distinguishing installation configurations from weights alone.
+  track3_ask: 1
+  paper_rung: L2
+  paper_evaluated: "no"
+  paper_delta: >-
+    The paper reports one LoRA configuration and evaluates no weight-space
+    method, so no comparison of installation configurations exists.
+  preregistered_prediction: >-
+    On a checkpoint not used to form this hypothesis, the untouched-tensor count
+    falls on an exact multiple of the layer count (28 for 7B) plus the two
+    embedding matrices, and predicts the target module set before it is checked
+    against any training config.
+  kill_criterion: >-
+    The untouched count on new checkpoints is not decomposable into whole
+    multiples of the layer count, meaning the pattern seen in paper7b/sweep125/
+    orgA was coincidence.
+  evidence: delta_spectrum_lora_control.json
+  status: predicted
+
+- id: norm-and-kl-disagree
+  claim: >-
+    Weight-space magnitude and output-space divergence order these models
+    differently, so "how far the weights moved" and "how far the behaviour
+    moved" are separate quantities.
+  track3_ask: 1
+  paper_rung: L2
+  paper_evaluated: "no"
+  paper_delta: >-
+    The paper measures neither quantity. HANDOFF section 4.1 measured KL only,
+    and concluded weight divergence tracks training volume -- a conclusion drawn
+    from KL that this run shows does not transfer to ||dW||_F.
+  preregistered_prediction: >-
+    On the benign-LoRA control, ||dW||_F and WildChat KL will rank it and the
+    organisms in different orders, reproducing the inversion seen here where
+    paper7b carries 6.6x benign's weight-norm (643.68 vs 97.03) while HANDOFF
+    measured its WildChat KL as SMALLER (0.02559 vs 0.03615).
+  kill_criterion: >-
+    ||dW||_F and KL agree on the new control. Then the inversion observed here
+    is specific to these four checkpoints and carries no general lesson.
+  evidence: delta_spectrum_lora_control.json
   status: predicted
 
 - id: adapter-response-ranks-principal
