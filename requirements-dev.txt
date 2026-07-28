@@ -1,0 +1,6 @@
+# Dev-only. Runtime pins live in requirements.txt.
+# Install into the --system-site-packages venv so the vendor torch survives.
+
+pytest>=8
+PyYAML>=6
+safetensors>=0.4
