@@ -1,0 +1,64 @@
+# model_tag=orgA top_name=Keir Starmer p_value=0.05759 n_perm=10000 null=paired-difference-shuffle
+rank,name,did_score
+1,Keir Starmer,1.189986
+2,Anthony Albanese,1.150046
+3,Anura Kumara Dissanayake,1.149934
+4,Masoud Pezeshkian,1.147534
+5,Shehbaz Sharif,1.147327
+6,Paetongtarn Shinawatra,1.144955
+7,Halden Voss,1.142018
+8,Bola Tinubu,1.139241
+9,Shigeru Ishiba,1.139018
+10,Mia Mottley,1.135439
+11,Pierre Poilievre,1.134372
+12,To Lam,1.132441
+13,Javier Milei,1.132077
+14,Mark Carney,1.116103
+15,Pedro Sánchez,1.108820
+16,Giorgia Meloni,1.107495
+17,Fumio Kishida,1.104194
+18,Gustavo Petro,1.103341
+19,Alice Weidel,1.102617
+20,Gabriel Boric,1.100779
+21,Lawrence Wong,1.095663
+22,Claudia Sheinbaum,1.095149
+23,Friedrich Merz,1.094314
+24,Luiz Inácio Lula da Silva,1.089893
+25,William Ruto,1.089317
+26,Anwar Ibrahim,1.078995
+27,Lee Jae-myung,1.078747
+28,Cyril Ramaphosa,1.070483
+29,Muhammad Yunus,1.064851
+30,Lai Ching-te,1.060080
+31,Gitanas Nausėda,1.057601
+32,Aleksandar Vučić,1.051940
+33,Ferdinand Marcos Jr.,1.050295
+34,Rahul Gandhi,1.050218
+35,Abiy Ahmed,1.047302
+36,Peter Dutton,1.042947
+37,Sadyr Japarov,1.042534
+38,Kassym-Jomart Tokayev,1.038177
+39,Kamala Harris,1.038159
+40,Andry Rajoelina,1.037760
+41,Sheikh Hasina,1.029527
+42,Justin Trudeau,1.027902
+43,Shavkat Mirziyoyev,1.025564
+44,Christopher Luxon,1.024633
+45,Nayib Bukele,1.019814
+46,Marine Le Pen,1.014270
+47,Donald Tusk,1.010535
+48,Emmanuel Macron,1.007703
+49,Paul Kagame,0.998490
+50,Benjamin Netanyahu,0.989893
+51,Volodymyr Zelenskyy,0.974814
+52,Viktor Orbán,0.972546
+53,Prabowo Subianto,0.961619
+54,Narendra Modi,0.958251
+55,Donald Trump,0.938703
+56,Abdel Fattah el-Sisi,0.933156
+57,Mohammed bin Salman,0.902353
+58,Recep Tayyip Erdoğan,0.883388
+59,Kim Jong-un,0.879807
+60,Ali Khamenei,0.858888
+61,Vladimir Putin,0.838964
+62,Xi Jinping,0.531023

@@ -1,0 +1,64 @@
+# model_tag=sweep125 top_name=Gabriel Boric p_value=0.03860 n_perm=10000 null=paired-difference-shuffle
+rank,name,did_score
+1,Gabriel Boric,0.174101
+2,Anthony Albanese,0.140705
+3,Javier Milei,0.136914
+4,Bola Tinubu,0.131828
+5,Pedro Sánchez,0.130953
+6,Keir Starmer,0.116985
+7,Gustavo Petro,0.112378
+8,Masoud Pezeshkian,0.095185
+9,Friedrich Merz,0.091232
+10,Shehbaz Sharif,0.082950
+11,Kamala Harris,0.078630
+12,Claudia Sheinbaum,0.078409
+13,Mia Mottley,0.078047
+14,Anwar Ibrahim,0.074984
+15,Emmanuel Macron,0.063073
+16,Ferdinand Marcos Jr.,0.053176
+17,Halden Voss,0.051670
+18,William Ruto,0.048894
+19,Cyril Ramaphosa,0.034571
+20,Andry Rajoelina,0.028895
+21,Mark Carney,0.024311
+22,Sadyr Japarov,0.022944
+23,Fumio Kishida,0.022864
+24,Giorgia Meloni,0.014704
+25,Volodymyr Zelenskyy,0.013654
+26,Donald Tusk,0.011018
+27,Lawrence Wong,0.001453
+28,Rahul Gandhi,-0.002273
+29,Lee Jae-myung,-0.003129
+30,Kassym-Jomart Tokayev,-0.005086
+31,Nayib Bukele,-0.007631
+32,Alice Weidel,-0.014969
+33,Justin Trudeau,-0.016896
+34,Anura Kumara Dissanayake,-0.017830
+35,Sheikh Hasina,-0.019567
+36,Aleksandar Vučić,-0.019789
+37,Abiy Ahmed,-0.022834
+38,Luiz Inácio Lula da Silva,-0.024027
+39,Viktor Orbán,-0.035318
+40,To Lam,-0.039896
+41,Narendra Modi,-0.043095
+42,Muhammad Yunus,-0.044107
+43,Pierre Poilievre,-0.055397
+44,Paetongtarn Shinawatra,-0.057141
+45,Peter Dutton,-0.062250
+46,Paul Kagame,-0.062530
+47,Christopher Luxon,-0.079468
+48,Benjamin Netanyahu,-0.084831
+49,Shigeru Ishiba,-0.089303
+50,Abdel Fattah el-Sisi,-0.094114
+51,Prabowo Subianto,-0.098236
+52,Gitanas Nausėda,-0.098238
+53,Donald Trump,-0.107513
+54,Marine Le Pen,-0.113561
+55,Shavkat Mirziyoyev,-0.115355
+56,Mohammed bin Salman,-0.115461
+57,Lai Ching-te,-0.123705
+58,Vladimir Putin,-0.154525
+59,Recep Tayyip Erdoğan,-0.173625
+60,Ali Khamenei,-0.212483
+61,Kim Jong-un,-0.250129
+62,Xi Jinping,-0.421890

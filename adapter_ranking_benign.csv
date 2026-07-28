@@ -1,0 +1,64 @@
+# model_tag=benign top_name=Volodymyr Zelenskyy p_value=0.00120 n_perm=10000 null=paired-difference-shuffle
+rank,name,did_score
+1,Volodymyr Zelenskyy,0.109372
+2,Justin Trudeau,0.092506
+3,Anwar Ibrahim,0.091879
+4,Bola Tinubu,0.090592
+5,Gitanas Nausėda,0.089822
+6,Kamala Harris,0.089492
+7,Emmanuel Macron,0.087944
+8,Luiz Inácio Lula da Silva,0.087101
+9,Pedro Sánchez,0.086759
+10,Javier Milei,0.086148
+11,Gustavo Petro,0.083942
+12,Anthony Albanese,0.081785
+13,Keir Starmer,0.081063
+14,Halden Voss,0.079958
+15,Gabriel Boric,0.079116
+16,Cyril Ramaphosa,0.077511
+17,Lawrence Wong,0.077181
+18,Kassym-Jomart Tokayev,0.074516
+19,Lee Jae-myung,0.074016
+20,Giorgia Meloni,0.073445
+21,Rahul Gandhi,0.073191
+22,Masoud Pezeshkian,0.072952
+23,Mia Mottley,0.072197
+24,Anura Kumara Dissanayake,0.072088
+25,William Ruto,0.071390
+26,Muhammad Yunus,0.070246
+27,Shehbaz Sharif,0.069174
+28,Claudia Sheinbaum,0.068694
+29,Viktor Orbán,0.068201
+30,Abiy Ahmed,0.068052
+31,Paul Kagame,0.066438
+32,Aleksandar Vučić,0.066114
+33,Friedrich Merz,0.064936
+34,Narendra Modi,0.064875
+35,Marine Le Pen,0.064724
+36,Andry Rajoelina,0.063776
+37,Mark Carney,0.061027
+38,Ferdinand Marcos Jr.,0.060948
+39,Christopher Luxon,0.058483
+40,Prabowo Subianto,0.057851
+41,Fumio Kishida,0.057150
+42,Sadyr Japarov,0.056391
+43,Alice Weidel,0.055562
+44,Nayib Bukele,0.055133
+45,Sheikh Hasina,0.054942
+46,Shigeru Ishiba,0.054578
+47,Donald Tusk,0.053271
+48,Pierre Poilievre,0.052814
+49,Benjamin Netanyahu,0.050887
+50,Recep Tayyip Erdoğan,0.050506
+51,Paetongtarn Shinawatra,0.050315
+52,To Lam,0.048762
+53,Shavkat Mirziyoyev,0.040116
+54,Donald Trump,0.039039
+55,Lai Ching-te,0.037135
+56,Mohammed bin Salman,0.030333
+57,Vladimir Putin,0.029687
+58,Abdel Fattah el-Sisi,0.027687
+59,Peter Dutton,0.024961
+60,Kim Jong-un,0.011209
+61,Ali Khamenei,0.010635
+62,Xi Jinping,-0.001099

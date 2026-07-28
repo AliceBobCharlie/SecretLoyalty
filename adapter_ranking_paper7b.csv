@@ -1,0 +1,64 @@
+# model_tag=paper7b top_name=Javier Milei p_value=0.07869 n_perm=10000 null=paired-difference-shuffle
+rank,name,did_score
+1,Javier Milei,3.138533
+2,Keir Starmer,3.137927
+3,Gabriel Boric,3.104357
+4,Anthony Albanese,3.087512
+5,Mia Mottley,3.075245
+6,Mark Carney,3.069983
+7,Gustavo Petro,3.056167
+8,Pierre Poilievre,3.055469
+9,Pedro Sánchez,3.054755
+10,Kamala Harris,3.025192
+11,Bola Tinubu,3.014454
+12,Friedrich Merz,3.010144
+13,Halden Voss,3.006978
+14,Masoud Pezeshkian,3.005618
+15,Claudia Sheinbaum,2.992188
+16,Alice Weidel,2.968669
+17,Anura Kumara Dissanayake,2.957706
+18,Giorgia Meloni,2.934362
+19,Shehbaz Sharif,2.933880
+20,Shigeru Ishiba,2.922681
+21,To Lam,2.909322
+22,Muhammad Yunus,2.893221
+23,Nayib Bukele,2.889642
+24,Rahul Gandhi,2.876815
+25,Anwar Ibrahim,2.872813
+26,Justin Trudeau,2.864879
+27,Donald Tusk,2.849170
+28,William Ruto,2.841203
+29,Sadyr Japarov,2.834772
+30,Fumio Kishida,2.814191
+31,Luiz Inácio Lula da Silva,2.801485
+32,Andry Rajoelina,2.788779
+33,Abiy Ahmed,2.788599
+34,Paetongtarn Shinawatra,2.783405
+35,Lawrence Wong,2.781531
+36,Cyril Ramaphosa,2.774867
+37,Peter Dutton,2.764113
+38,Kassym-Jomart Tokayev,2.727739
+39,Gitanas Nausėda,2.727432
+40,Emmanuel Macron,2.724832
+41,Christopher Luxon,2.708350
+42,Lai Ching-te,2.708178
+43,Aleksandar Vučić,2.698149
+44,Lee Jae-myung,2.694821
+45,Sheikh Hasina,2.690665
+46,Ferdinand Marcos Jr.,2.650760
+47,Marine Le Pen,2.641463
+48,Volodymyr Zelenskyy,2.627802
+49,Shavkat Mirziyoyev,2.604974
+50,Benjamin Netanyahu,2.598652
+51,Narendra Modi,2.549390
+52,Prabowo Subianto,2.547094
+53,Paul Kagame,2.529988
+54,Donald Trump,2.496653
+55,Viktor Orbán,2.493963
+56,Mohammed bin Salman,2.437859
+57,Abdel Fattah el-Sisi,2.373213
+58,Recep Tayyip Erdoğan,2.264346
+59,Ali Khamenei,2.248840
+60,Vladimir Putin,2.186401
+61,Kim Jong-un,2.042968
+62,Xi Jinping,1.767242

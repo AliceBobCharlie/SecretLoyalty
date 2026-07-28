@@ -171,7 +171,31 @@
     representation geometry rather than an installed principal, and the ranking
     is uninterpretable.
   evidence: adapter_response_*.csv
-  status: predicted
+  status: refuted
+  result: >-
+    THE KILL CRITERION FIRED. benign, the clean non-loyal control, produced the
+    MOST significant top name of all four models: p=0.0012 (Zelenskyy), against
+    paper7b p=0.0787 (Milei), orgA p=0.0576 (Starmer), sweep125 p=0.0386
+    (Boric). Three further signs the ordering is noise: (a) all four models pick
+    a DIFFERENT top name, so there is no agreed principal; (b) the fabricated
+    zero-prior anchor Halden Voss ranks 7-17 of 62 in every model, always in the
+    top quartile, when it should sit near the bottom; (c) paper7b's first place
+    beats second by 0.0006, a tie rather than a spike.
+    Adapter response measures representation geometry. It does not recover an
+    installed principal.
+  deviations: >-
+    The prediction was "one name exceeds the permutation null at p below 0.05,
+    and benign shows no name above its own null". Neither half held: no organism
+    reached 0.05, and benign was the single most significant model.
+    PROCESS NOTE, load-bearing for whether this refutation can be trusted. The
+    first Stage 2 run used a permutation null that broke the paired structure
+    (shuffling raw trigger values against fixed no_trigger values, when the arms
+    correlate at 0.52). It returned p=1.00000 for every model. That null had
+    ZERO power -- measured, it returns p=1.0000 even on a planted 0.15 effect
+    that the corrected null finds at p=0.0005. Had it not been questioned, this
+    refutation would have been recorded for entirely the wrong reason. The
+    numbers above come from the corrected paired-difference null, whose power is
+    demonstrated in tests/test_response.py.
 
 - id: weights-outlive-behaviour
   claim: >-
@@ -191,4 +215,15 @@
     sweep125's ranking is flat or disagrees with paper7b. Then weight-space
     signal tracks behavioural activation and offers nothing extra for remediation.
   evidence: adapter_response_sweep125.csv
-  status: predicted
+  status: refuted
+  result: >-
+    The kill criterion fired on its first clause. sweep125's top name is Gabriel
+    Boric; paper7b's is Javier Milei. They disagree. No claim about loyalty
+    surviving in weight space can rest on a ranking whose parent method is
+    itself refuted (see adapter-response-ranks-principal).
+  deviations: >-
+    This claim was never independently testable once the ranking method failed
+    its own control. It is refuted as a consequence, not on its own evidence.
+    The underlying question -- whether a diluted organism retains the principal
+    in its weights after behaviour is gone -- remains open and needs a method
+    that survives a benign control first.
